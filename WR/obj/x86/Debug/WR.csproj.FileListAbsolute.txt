@@ -1,0 +1,14 @@
+c:\users\wownetcn\documents\visual studio 2010\Projects\WR\WR\bin\Debug\WR.exe
+c:\users\wownetcn\documents\visual studio 2010\Projects\WR\WR\bin\Debug\WR.pdb
+c:\users\wownetcn\documents\visual studio 2010\Projects\WR\WR\obj\x86\Debug\WR.Form1.resources
+c:\users\wownetcn\documents\visual studio 2010\Projects\WR\WR\obj\x86\Debug\WR.Properties.Resources.resources
+c:\users\wownetcn\documents\visual studio 2010\Projects\WR\WR\obj\x86\Debug\WR.csproj.GenerateResource.Cache
+c:\users\wownetcn\documents\visual studio 2010\Projects\WR\WR\obj\x86\Debug\WR.exe
+c:\users\wownetcn\documents\visual studio 2010\Projects\WR\WR\obj\x86\Debug\WR.pdb
+c:\users\wownetcn\documents\visual studio 2010\Projects\WR\WR\bin\Debug\ICSharpCode.SharpZipLib.dll
+c:\users\wownetcn\documents\visual studio 2010\Projects\WR\WR\bin\Debug\NPOI.dll
+c:\users\wownetcn\documents\visual studio 2010\Projects\WR\WR\bin\Debug\NPOI.OOXML.dll
+c:\users\wownetcn\documents\visual studio 2010\Projects\WR\WR\bin\Debug\NPOI.OpenXml4Net.dll
+c:\users\wownetcn\documents\visual studio 2010\Projects\WR\WR\bin\Debug\NPOI.OpenXmlFormats.dll
+c:\users\wownetcn\documents\visual studio 2010\Projects\WR\WR\bin\Debug\NPOI.xml
+c:\users\wownetcn\documents\visual studio 2010\Projects\WR\WR\obj\x86\Debug\WR.csprojResolveAssemblyReference.cache
