@@ -33,16 +33,22 @@
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.listBox1 = new System.Windows.Forms.ListBox();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.MU_READ_FORMAT = new System.Windows.Forms.MenuStrip();
+            this.MI_TYPE1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.MI_TYPE2 = new System.Windows.Forms.ToolStripMenuItem();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
-            this.btnUpdate = new System.Windows.Forms.Button();
-            this.btnExport = new System.Windows.Forms.Button();
-            this.btnRead = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
             this.groupbox1 = new System.Windows.Forms.GroupBox();
+            this.btnExport = new System.Windows.Forms.Button();
             this.ckbOptionHead = new System.Windows.Forms.CheckBox();
+            this.btnUpdate = new System.Windows.Forms.Button();
+            this.btnRead = new System.Windows.Forms.Button();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.txtFilePath = new System.Windows.Forms.ToolStripStatusLabel();
             this.tpBar = new System.Windows.Forms.ToolStripProgressBar();
+            this.mi_import_answer = new System.Windows.Forms.ToolStripMenuItem();
             this.SEQ_NUM = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Q_SEQ_NUM = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.QUESTIONS_DESC = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.QUESTIONS_TYPE = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.OPTION_A = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -52,12 +58,12 @@
             this.ANSWER = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ANALYSIS = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ROWS = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.label1 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            this.MU_READ_FORMAT.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).BeginInit();
             this.splitContainer2.Panel1.SuspendLayout();
             this.splitContainer2.Panel2.SuspendLayout();
@@ -74,7 +80,7 @@
             this.btnOpen.TabIndex = 2;
             this.btnOpen.Text = "打开...";
             this.btnOpen.UseVisualStyleBackColor = true;
-            this.btnOpen.Click += new System.EventHandler(this.button1_Click);
+            this.btnOpen.Click += new System.EventHandler(this.btnOpen_Click);
             // 
             // splitContainer1
             // 
@@ -89,6 +95,7 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.dataGridView1);
+            this.splitContainer1.Panel2.Controls.Add(this.MU_READ_FORMAT);
             this.splitContainer1.Size = new System.Drawing.Size(811, 416);
             this.splitContainer1.SplitterDistance = 200;
             this.splitContainer1.TabIndex = 4;
@@ -112,6 +119,7 @@
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.SEQ_NUM,
+            this.Q_SEQ_NUM,
             this.QUESTIONS_DESC,
             this.QUESTIONS_TYPE,
             this.OPTION_A,
@@ -122,13 +130,42 @@
             this.ANALYSIS,
             this.ROWS});
             this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dataGridView1.Location = new System.Drawing.Point(0, 0);
+            this.dataGridView1.Location = new System.Drawing.Point(0, 25);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowTemplate.Height = 23;
-            this.dataGridView1.Size = new System.Drawing.Size(607, 416);
+            this.dataGridView1.Size = new System.Drawing.Size(607, 391);
             this.dataGridView1.TabIndex = 0;
             this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
-            this.dataGridView1.CellPainting += new System.Windows.Forms.DataGridViewCellPaintingEventHandler(this.dataGridView1_CellPainting);
+            // 
+            // MU_READ_FORMAT
+            // 
+            this.MU_READ_FORMAT.BackColor = System.Drawing.Color.Tan;
+            this.MU_READ_FORMAT.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.MI_TYPE1,
+            this.MI_TYPE2,
+            this.mi_import_answer});
+            this.MU_READ_FORMAT.Location = new System.Drawing.Point(0, 0);
+            this.MU_READ_FORMAT.Name = "MU_READ_FORMAT";
+            this.MU_READ_FORMAT.Size = new System.Drawing.Size(607, 25);
+            this.MU_READ_FORMAT.TabIndex = 1;
+            this.MU_READ_FORMAT.Text = "读取格式";
+            // 
+            // MI_TYPE1
+            // 
+            this.MI_TYPE1.BackColor = System.Drawing.Color.DarkSlateGray;
+            this.MI_TYPE1.ForeColor = System.Drawing.Color.Tan;
+            this.MI_TYPE1.Name = "MI_TYPE1";
+            this.MI_TYPE1.Size = new System.Drawing.Size(51, 21);
+            this.MI_TYPE1.Text = "格式1";
+            this.MI_TYPE1.Click += new System.EventHandler(this.MI_TYPE1_Click);
+            // 
+            // MI_TYPE2
+            // 
+            this.MI_TYPE2.ForeColor = System.Drawing.Color.Black;
+            this.MI_TYPE2.Name = "MI_TYPE2";
+            this.MI_TYPE2.Size = new System.Drawing.Size(51, 21);
+            this.MI_TYPE2.Text = "格式2";
+            this.MI_TYPE2.Click += new System.EventHandler(this.MI_TYPE2_Click);
             // 
             // splitContainer2
             // 
@@ -151,35 +188,16 @@
             this.splitContainer2.SplitterDistance = 49;
             this.splitContainer2.TabIndex = 5;
             // 
-            // btnUpdate
+            // label1
             // 
-            this.btnUpdate.Location = new System.Drawing.Point(174, 12);
-            this.btnUpdate.Name = "btnUpdate";
-            this.btnUpdate.Size = new System.Drawing.Size(76, 30);
-            this.btnUpdate.TabIndex = 5;
-            this.btnUpdate.Text = "更新";
-            this.btnUpdate.UseVisualStyleBackColor = true;
-            this.btnUpdate.Click += new System.EventHandler(this.btnUpdate_Click);
-            // 
-            // btnExport
-            // 
-            this.btnExport.Location = new System.Drawing.Point(258, 12);
-            this.btnExport.Name = "btnExport";
-            this.btnExport.Size = new System.Drawing.Size(76, 30);
-            this.btnExport.TabIndex = 4;
-            this.btnExport.Text = "导出EXCEL";
-            this.btnExport.UseVisualStyleBackColor = true;
-            this.btnExport.Click += new System.EventHandler(this.btnExport_Click);
-            // 
-            // btnRead
-            // 
-            this.btnRead.Location = new System.Drawing.Point(90, 12);
-            this.btnRead.Name = "btnRead";
-            this.btnRead.Size = new System.Drawing.Size(76, 30);
-            this.btnRead.TabIndex = 3;
-            this.btnRead.Text = "读取";
-            this.btnRead.UseVisualStyleBackColor = true;
-            this.btnRead.Click += new System.EventHandler(this.button3_Click);
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label1.ForeColor = System.Drawing.Color.Maroon;
+            this.label1.Location = new System.Drawing.Point(456, 19);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(357, 14);
+            this.label1.TabIndex = 7;
+            this.label1.Text = "注意：单选/多选/判断/不定项 等大项之间请插入空行！";
             // 
             // groupbox1
             // 
@@ -194,6 +212,16 @@
             this.groupbox1.TabIndex = 6;
             this.groupbox1.TabStop = false;
             // 
+            // btnExport
+            // 
+            this.btnExport.Location = new System.Drawing.Point(258, 12);
+            this.btnExport.Name = "btnExport";
+            this.btnExport.Size = new System.Drawing.Size(76, 30);
+            this.btnExport.TabIndex = 4;
+            this.btnExport.Text = "导出EXCEL";
+            this.btnExport.UseVisualStyleBackColor = true;
+            this.btnExport.Click += new System.EventHandler(this.btnExport_Click);
+            // 
             // ckbOptionHead
             // 
             this.ckbOptionHead.AutoSize = true;
@@ -203,6 +231,26 @@
             this.ckbOptionHead.TabIndex = 6;
             this.ckbOptionHead.Text = "选择项符号";
             this.ckbOptionHead.UseVisualStyleBackColor = true;
+            // 
+            // btnUpdate
+            // 
+            this.btnUpdate.Location = new System.Drawing.Point(174, 12);
+            this.btnUpdate.Name = "btnUpdate";
+            this.btnUpdate.Size = new System.Drawing.Size(76, 30);
+            this.btnUpdate.TabIndex = 5;
+            this.btnUpdate.Text = "更新";
+            this.btnUpdate.UseVisualStyleBackColor = true;
+            this.btnUpdate.Click += new System.EventHandler(this.btnUpdate_Click);
+            // 
+            // btnRead
+            // 
+            this.btnRead.Location = new System.Drawing.Point(90, 12);
+            this.btnRead.Name = "btnRead";
+            this.btnRead.Size = new System.Drawing.Size(76, 30);
+            this.btnRead.TabIndex = 3;
+            this.btnRead.Text = "读取";
+            this.btnRead.UseVisualStyleBackColor = true;
+            this.btnRead.Click += new System.EventHandler(this.btnRead_Click);
             // 
             // statusStrip1
             // 
@@ -230,12 +278,26 @@
             this.tpBar.Overflow = System.Windows.Forms.ToolStripItemOverflow.Never;
             this.tpBar.Size = new System.Drawing.Size(100, 16);
             // 
+            // mi_import_answer
+            // 
+            this.mi_import_answer.Name = "mi_import_answer";
+            this.mi_import_answer.Size = new System.Drawing.Size(68, 21);
+            this.mi_import_answer.Text = "导入答案";
+            this.mi_import_answer.Click += new System.EventHandler(this.mi_import_answer_Click);
+            // 
             // SEQ_NUM
             // 
             this.SEQ_NUM.DataPropertyName = "SEQ_NUM";
             this.SEQ_NUM.HeaderText = "序号";
             this.SEQ_NUM.Name = "SEQ_NUM";
             this.SEQ_NUM.Width = 40;
+            // 
+            // Q_SEQ_NUM
+            // 
+            this.Q_SEQ_NUM.DataPropertyName = "Q_SEQ_NUM";
+            this.Q_SEQ_NUM.HeaderText = "标题行号";
+            this.Q_SEQ_NUM.Name = "Q_SEQ_NUM";
+            this.Q_SEQ_NUM.Width = 40;
             // 
             // QUESTIONS_DESC
             // 
@@ -296,20 +358,8 @@
             // ROWS
             // 
             this.ROWS.DataPropertyName = "ROWS";
-            this.ROWS.HeaderText = "原始行";
+            this.ROWS.HeaderText = "文本行";
             this.ROWS.Name = "ROWS";
-            this.ROWS.Visible = false;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label1.ForeColor = System.Drawing.Color.Maroon;
-            this.label1.Location = new System.Drawing.Point(456, 19);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(357, 14);
-            this.label1.TabIndex = 7;
-            this.label1.Text = "注意：单选/多选/判断/不定项 等大项之间请插入空行！";
             // 
             // PaperHandler
             // 
@@ -320,15 +370,19 @@
             this.Controls.Add(this.splitContainer2);
             this.Controls.Add(this.statusStrip1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MainMenuStrip = this.MU_READ_FORMAT;
             this.Name = "PaperHandler";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "试题格式化-powered by rcode@163.com";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);
+            this.splitContainer1.Panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            this.MU_READ_FORMAT.ResumeLayout(false);
+            this.MU_READ_FORMAT.PerformLayout();
             this.splitContainer2.Panel1.ResumeLayout(false);
             this.splitContainer2.Panel1.PerformLayout();
             this.splitContainer2.Panel2.ResumeLayout(false);
@@ -358,7 +412,13 @@
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.ToolStripStatusLabel txtFilePath;
         private System.Windows.Forms.ToolStripProgressBar tpBar;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.MenuStrip MU_READ_FORMAT;
+        private System.Windows.Forms.ToolStripMenuItem MI_TYPE1;
+        private System.Windows.Forms.ToolStripMenuItem MI_TYPE2;
+        private System.Windows.Forms.ToolStripMenuItem mi_import_answer;
         private System.Windows.Forms.DataGridViewTextBoxColumn SEQ_NUM;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Q_SEQ_NUM;
         private System.Windows.Forms.DataGridViewTextBoxColumn QUESTIONS_DESC;
         private System.Windows.Forms.DataGridViewTextBoxColumn QUESTIONS_TYPE;
         private System.Windows.Forms.DataGridViewTextBoxColumn OPTION_A;
@@ -368,7 +428,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn ANSWER;
         private System.Windows.Forms.DataGridViewTextBoxColumn ANALYSIS;
         private System.Windows.Forms.DataGridViewTextBoxColumn ROWS;
-        private System.Windows.Forms.Label label1;
     }
 }
 

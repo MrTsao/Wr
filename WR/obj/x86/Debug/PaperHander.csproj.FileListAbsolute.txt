@@ -16,3 +16,21 @@ c:\users\wownetcn\documents\visual studio 2010\Projects\WR\WR\bin\Debug\SySoft.a
 c:\users\wownetcn\documents\visual studio 2010\Projects\WR\WR\obj\x86\Debug\SySoft.exe.manifest
 c:\users\wownetcn\documents\visual studio 2010\Projects\WR\WR\obj\x86\Debug\SySoft.application
 C:\Users\wownetcn\Documents\visual studio 2010\Projects\WR\WR\obj\x86\Debug\PaperHander.csprojResolveAssemblyReference.cache
+F:\Wr\WR\obj\x86\Debug\SySoft.exe
+F:\Wr\WR\obj\x86\Debug\SySoft.pdb
+F:\Wr\WR\bin\Debug\SySoft.exe.manifest
+F:\Wr\WR\bin\Debug\SySoft.application
+F:\Wr\WR\bin\Debug\SySoft.exe
+F:\Wr\WR\bin\Debug\SySoft.pdb
+F:\Wr\WR\bin\Debug\ICSharpCode.SharpZipLib.dll
+F:\Wr\WR\bin\Debug\NPOI.dll
+F:\Wr\WR\bin\Debug\NPOI.OOXML.dll
+F:\Wr\WR\bin\Debug\NPOI.OpenXml4Net.dll
+F:\Wr\WR\bin\Debug\NPOI.OpenXmlFormats.dll
+F:\Wr\WR\bin\Debug\NPOI.xml
+F:\Wr\WR\obj\x86\Debug\PaperHander.csprojResolveAssemblyReference.cache
+F:\Wr\WR\obj\x86\Debug\SySoft.PaperHandler.resources
+F:\Wr\WR\obj\x86\Debug\SySoft.Properties.Resources.resources
+F:\Wr\WR\obj\x86\Debug\PaperHander.csproj.GenerateResource.Cache
+F:\Wr\WR\obj\x86\Debug\SySoft.exe.manifest
+F:\Wr\WR\obj\x86\Debug\SySoft.application
