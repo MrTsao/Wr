@@ -28,7 +28,7 @@ namespace SySoft
         private void Form1_Load(object sender, EventArgs e)
         {
             con = new SqlConnection();
-            con.ConnectionString = "server=47.94.92.223;database=Oes;uid=sa;pwd=ocssm137!#";
+            con.ConnectionString = "server=;database=;uid=sa;pwd=";
             this.txtFilePath.Text = "请选择导入文件！";
             this.txtYear.Text = DateTime.Now.Year.ToString();
             this.txtBatchNo.Text = DateTime.Now.ToString("yyyyMMddmmss");
