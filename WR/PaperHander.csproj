@@ -100,6 +100,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CMemIdGenerator.cs" />
     <Compile Include="Main.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -133,6 +134,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="fav.ico" />
+    <None Include="Resources\forwardarr.png" />
     <Content Include="vaf.ico" />
   </ItemGroup>
   <ItemGroup>

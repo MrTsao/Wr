@@ -11,12 +11,15 @@ using NPOI.XWPF;
 using NPOI.XWPF.UserModel;
 using NPOI.XWPF.Extractor;
 using System.IO;
+using System.Data.SqlClient;
 
 namespace SySoft
 {
     public partial class PaperHandler : Form
     {
-        private char formatType = 'A';
+        private static SqlConnection con;
+        private char cstatus = '0';
+        private char formatType = 'B';
         public PaperHandler()
         {
             InitializeComponent();
@@ -24,7 +27,13 @@ namespace SySoft
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            con = new SqlConnection();
+            con.ConnectionString = "server=47.94.92.223;database=Oes;uid=sa;pwd=ocssm137!#";
             this.txtFilePath.Text = "请选择导入文件！";
+            this.txtYear.Text = DateTime.Now.Year.ToString();
+            this.txtBatchNo.Text = DateTime.Now.ToString("yyyyMMddmmss");
+            this.格式1ToolStripMenuItem.Image = null;
+            this.格式2ToolStripMenuItem.Image = SySoft.Properties.Resources.forwardarr;
         }
 
         private void ReadDoc(string strFilePath)
@@ -306,17 +315,22 @@ namespace SySoft
             string con = "";
             //foreach (string str in pathFile)
             //{
-            FileStream fs = new FileStream(strFilePath, FileMode.Open, FileAccess.Read);
-            StreamReader sr = new StreamReader(fs, Encoding.UTF8);
-            con = sr.ReadToEnd();
-            con = con.Replace("\n\n", "").Replace("A.", "\nA.").Replace("B.", "\nB.").Replace("C.", "\nC.").Replace("D.", "\nD.");
-            sr.Close();
-            fs.Close();
-            FileStream fs2 = new FileStream(strFilePath, FileMode.Open, FileAccess.Write);
-            StreamWriter sw = new StreamWriter(fs2, Encoding.UTF8);
-            sw.WriteLine(con);
-            sw.Close();
-            fs2.Close();
+            FileInfo fi = new FileInfo(strFilePath);
+            if (fi.Exists)
+            {
+
+                FileStream fs = new FileStream(strFilePath, FileMode.Open, FileAccess.Read);
+                StreamReader sr = new StreamReader(fs, Encoding.UTF8);
+                con = sr.ReadToEnd();
+                con = con.Replace("\n\n", "").Replace("A.", "\nA.").Replace("B.", "\nB.").Replace("C.", "\nC.").Replace("D.", "\nD.");
+                sr.Close();
+                fs.Close();
+                FileStream fs2 = new FileStream(strFilePath, FileMode.Truncate, FileAccess.Write);
+                StreamWriter sw = new StreamWriter(fs2, Encoding.UTF8);
+                sw.WriteLine(con);
+                sw.Close();
+                fs2.Close();
+            }
             //}
             //MessageBox.Show("转换完成");
         }
@@ -331,6 +345,20 @@ namespace SySoft
                 StreamReader sr = new StreamReader(strFile, Encoding.Default);
                 string strLine = "";
                 bool isStart = false;
+
+                string strType = "";
+                if (strFile.Contains("单选"))
+                {
+                    strType = "0";
+                }
+                else if (strFile.Contains("多选"))
+                {
+                    strType = "1";
+                }
+                else if (strFile.Contains("判断"))
+                {
+                    strType = "3";
+                }
 
                 DataTable dtQuestion = new DataTable();
                 dtQuestion.Columns.Add(new DataColumn("SEQ_NUM", Type.GetType("System.Int32")));
@@ -370,14 +398,15 @@ namespace SySoft
                     if (tirg.IsMatch(strLine))
                     {
                         string strQSeqNum = strLine.Substring(0, strLine.IndexOf("．"));
-                        strLine = strLine.Substring((j + 1).ToString().Length + 1).Trim();
                         ctype = 'T';
                         if (!string.IsNullOrEmpty(drNew["QUESTIONS_DESC"].ToString()))
                         {
                             dtQuestion.Rows.Add(drNew);
                             drNew = dtQuestion.NewRow();
                         }
+                        strLine = strLine.Substring(strQSeqNum.Length + 1).Trim();
                         drNew["Q_SEQ_NUM"] = strQSeqNum;
+                        drNew["QUESTIONS_TYPE"] = strType;
                         drNew["SEQ_NUM"] = ++j;
                         drNew["ROWS"] = i;
 
@@ -392,19 +421,19 @@ namespace SySoft
                     }
                     else if (ctype == 'A')
                     {
-                        drNew["OPTION_A"] += strLine;
+                        drNew["OPTION_A"] += GetFormatString(strLine);
                     }
                     else if (ctype == 'B')
                     {
-                        drNew["OPTION_B"] += strLine;
+                        drNew["OPTION_B"] += GetFormatString(strLine);
                     }
                     else if (ctype == 'C')
                     {
-                        drNew["OPTION_C"] += strLine;
+                        drNew["OPTION_C"] += GetFormatString(strLine);
                     }
                     else if (ctype == 'D')
                     {
-                        drNew["OPTION_D"] += strLine;
+                        drNew["OPTION_D"] += GetFormatString(strLine);
                     }
                 }
                 if (drNew != null)
@@ -451,7 +480,7 @@ namespace SySoft
                     {
                         int iStart = strLine.IndexOf("】") + 1;
                         int iEnd = strLine.IndexOf("。");
-                        drs[0]["ANSWER"] = strLine.Substring(iStart, iEnd - iStart);
+                        drs[0]["ANSWER"] = strLine.Substring(iStart, iEnd - iStart).Trim();
                         int iAnsi = strLine.IndexOf("解析：");
                         if (iAnsi > 0)
                         {
@@ -563,7 +592,172 @@ namespace SySoft
             }
         }
 
-        private void btnExport_Click(object sender, EventArgs e)
+        private void btnUpdate_Click(object sender, EventArgs e)
+        {
+            if (this.dataGridView1.Rows.Count <= 0)
+            {
+                MessageBox.Show("无数据更新！");
+                return;
+            }
+            this.btnUpdate.Enabled = false;
+            try
+            {
+                con.Open();
+                SqlCommand com = new SqlCommand();
+                com.Connection = con;
+                com.CommandType = CommandType.Text;
+
+                string strSql = "";
+                string strBatchNo = this.txtBatchNo.Text;
+                this.tpBar.Value = 0;
+                double dCrease = this.dataGridView1.Rows.Count / 100.00, dAcount = 0.0;
+                CMemIdGenerator cm = new CMemIdGenerator();
+                cm.IDPrefix = "RID";
+                for (int i = 0; i < this.dataGridView1.Rows.Count; i++)
+                {
+                    string strId = cm.NewID();
+                    strSql = @"insert into LSS_EXAM_QUESTIONS SELECT 
+	                    '" + strId + @"' AS QUESTIONS_ID
+	                    ,'" + strBatchNo + @"' AS REAL_BATCH_ID
+	                    ,NULL AS QUESTIONS_NO
+	                    ,'" + this.dataGridView1.Rows[i].Cells[0].Value.ToString().Replace("'", "''") + @"' as SEQ_NUM
+	                    ,'0' as QUESTIONS_PROPERTY_CID
+	                    ,'" + this.dataGridView1.Rows[i].Cells[2].Value.ToString().Replace("'", "''") + @"' as QUESTIONS_TYPE_CID
+	                    ,'" + this.dataGridView1.Rows[i].Cells[1].Value.ToString().Replace("'", "''") + @"' as QUESTIONS_DESC
+	                    ,'" + this.dataGridView1.Rows[i].Cells[8].Value.ToString().Replace("'", "''") + @"' as ANSWER_HINT_DESC
+	                    ,'" + this.dataGridView1.Rows[i].Cells[3].Value.ToString().Replace("'", "''") + @"' as REQ_ANSWER_DESC1
+	                    ,'" + this.dataGridView1.Rows[i].Cells[4].Value.ToString().Replace("'", "''") + @"' as REQ_ANSWER_DESC2
+	                    ,'" + this.dataGridView1.Rows[i].Cells[5].Value.ToString().Replace("'", "''") + @"' as REQ_ANSWER_DESC3
+	                    ,'" + this.dataGridView1.Rows[i].Cells[6].Value.ToString().Replace("'", "''") + @"' as REQ_ANSWER_DESC4
+	                    ,null as REQ_ANSWER_DESC5
+	                    ,null as REQ_ANSWER_DESC6
+	                    ,'" + this.dataGridView1.Rows[i].Cells[7].Value.ToString().Replace("'", "''") + @"' as ANSWER_IDENTIFY_DESC
+	                    ,null as DIFFICULTY_TYPE_CID
+	                    ,0 as QUESTIONS_STATUS_SID
+	                    ,null as CALC_TYPE_CID
+	                    ,2 as CALC_SCORE
+	                    ,null as NEED_SECOND
+	                    ,'cx' as INITIAL_USR
+	                    ,GETDATE() as INITIAL_DT
+	                    ,'cx' as REC_UPDATE_USR
+	                    ,GETDATE() as REC_UPDATE_DT;";
+                    if (!string.IsNullOrEmpty(this.dplKey.Text))
+                    {
+                        strSql += @"INSERT INTO LSS_EXAM_QUESTIONS_KEY SELECT NEWID() AS QUESTIONS_KEY_ID
+,'" + strId + @"' as QUESTIONS_ID
+,'" + this.dplKey.SelectedText + @"'as EXAM_CONTENT
+,'" + this.txtYear.Text + @"' as EXAM_YEAR,'cx' as INITIAL_USR,GETDATE() as INITIAL_DT,'cx' as REC_UPDATE_USR,GETDATE() as REC_UPDATE_DT;";
+                    }
+                    com.CommandText = strSql;
+                    SqlDataReader dr = com.ExecuteReader();//执行SQL语句
+                    dr.Close();//关闭执行
+                    dAcount += dCrease;
+                    this.tpBar.Value = (int)dAcount > 100 ? 100 : (int)dAcount;
+                }
+                this.tpBar.Value = 100;
+                MessageBox.Show("导入完成");
+            }
+            catch (Exception err)
+            {
+                MessageBox.Show(err.Message);
+            }
+            finally
+            {
+                con.Close();//关闭数据库
+                this.btnUpdate.Enabled = true;
+            }
+        }
+
+        private void 导入答案ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog ofd = new OpenFileDialog();
+            ofd.Filter = "text|*.txt";//|docx|*.docx|97-word|*.doc
+            ofd.ShowDialog();
+            string strFile = ofd.FileName.ToUpper();
+            if (strFile.EndsWith(".TXT"))
+            {
+                if (formatType == 'B')
+                {
+                    ReadAnswers(strFile);
+                }
+            }
+        }
+
+        private void 格式1ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            formatType = 'A';
+            this.格式1ToolStripMenuItem.Image = SySoft.Properties.Resources.forwardarr;
+            this.格式2ToolStripMenuItem.Image = null;
+            ReadTextA(this.txtFilePath.Text.ToUpper());
+        }
+
+        private void 格式2ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            formatType = 'B';
+            this.格式1ToolStripMenuItem.Image = null;
+            this.格式2ToolStripMenuItem.Image = SySoft.Properties.Resources.forwardarr;
+            ReadTextB(this.txtFilePath.Text.ToUpper());
+        }
+
+        private void 打开ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog ofd = new OpenFileDialog();
+            ofd.Filter = "text|*.txt";//|docx|*.docx|97-word|*.doc
+            ofd.ShowDialog();
+            this.txtFilePath.Text = ofd.FileName;
+            string strFile = this.txtFilePath.Text.ToUpper();
+            if (strFile.EndsWith(".DOCX") || strFile.EndsWith(".DOC"))
+            {
+                ReadDoc(strFile);
+            }
+            else if (strFile.EndsWith(".TXT"))
+            {
+                if (formatType == 'A')
+                {
+                    ReadTextA(strFile);
+                }
+                else if (formatType == 'B')
+                {
+                    ReadTextB(strFile);
+                }
+            }
+        }
+
+        private void 修改ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string strFile = this.txtFilePath.Text.ToUpper();
+            FileInfo fi = new FileInfo(strFile);
+            if (fi.Exists)
+            {
+                System.Diagnostics.Process.Start("NOTEPAD.exe", this.txtFilePath.Text.ToUpper());
+            }
+            else
+            {
+                MessageBox.Show("当前无文件打开");
+            }
+        }
+
+        private void toolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            string strFile = this.txtFilePath.Text.ToUpper();
+            if (strFile.EndsWith(".DOCX") || strFile.EndsWith(".DOC"))
+            {
+                ReadDoc(strFile);
+            }
+            else if (strFile.EndsWith(".TXT"))
+            {
+                if (formatType == 'A')
+                {
+                    ReadTextA(strFile);
+                }
+                else if (formatType == 'B')
+                {
+                    ReadTextB(strFile);
+                }
+            }
+        }
+
+        private void eXCELToolStripMenuItem_Click(object sender, EventArgs e)
         {
             SaveFileDialog sflg = new SaveFileDialog();
             sflg.Filter = "Excel(*.xls)|*.xls|Excel(*.xlsx)|*.xlsx";
@@ -630,92 +824,128 @@ namespace SySoft
 
             ms.Close();
             ms.Dispose();
+
         }
 
-
-        private void btnOpen_Click(object sender, EventArgs e)
+        private void btnGetBatch_Click(object sender, EventArgs e)
         {
-            OpenFileDialog ofd = new OpenFileDialog();
-            ofd.Filter = "text|*.txt";//|docx|*.docx|97-word|*.doc
-            ofd.ShowDialog();
-            this.txtFilePath.Text = ofd.FileName;
-            string strFile = this.txtFilePath.Text.ToUpper();
-            if (strFile.EndsWith(".DOCX") || strFile.EndsWith(".DOC"))
+            this.btnGetBatch.Enabled = false;
+            try
             {
-                ReadDoc(strFile);
-            }
-            else if (strFile.EndsWith(".TXT"))
-            {
-                if (formatType == 'A')
-                {
-                    ReadTextA(strFile);
-                }
-                else if (formatType == 'B')
-                {
-                    ReadTextB(strFile);
-                }
-            }
-        }
+                this.tpBar.Value = 0;
+                con.Open();
+                SqlCommand com = new SqlCommand();
+                com.Connection = con;
+                com.CommandType = CommandType.Text;
+                string strSql = "SELECT DISTINCT REAL_BATCH_ID FROM LSS_EXAM_QUESTIONS";
+                com.CommandText = strSql;
 
-        private void btnRead_Click(object sender, EventArgs e)
-        {
-            string strFile = this.txtFilePath.Text.ToUpper();
-            if (strFile.EndsWith(".DOCX") || strFile.EndsWith(".DOC"))
-            {
-                ReadDoc(strFile);
+                DataTable dt = new DataTable();
+                SqlDataAdapter ad = new SqlDataAdapter(com);
+                ad.Fill(dt);
+
+                this.tpBar.Value = 50;
+                this.libBatch.DataSource = dt;
+                this.libBatch.DisplayMember = "REAL_BATCH_ID";
+                this.libBatch.ValueMember = "REAL_BATCH_ID";
+                //dr.Close();
             }
-            else if (strFile.EndsWith(".TXT"))
+            catch (Exception err)
             {
-                if (formatType == 'A')
-                {
-                    ReadTextA(strFile);
-                }
-                else if (formatType == 'B')
-                {
-                    ReadTextB(strFile);
-                }
+                MessageBox.Show(err.Message);
+            }
+            finally
+            {
+                con.Close();//关闭数据库
+                this.tpBar.Value = 100;
+                this.btnGetBatch.Enabled = true;
             }
         }
 
-        private void btnUpdate_Click(object sender, EventArgs e)
+        private void btnDelete_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("暂未开发！");
-        }
-
-        private void MI_TYPE1_Click(object sender, EventArgs e)
-        {
-            this.MI_TYPE1.ForeColor = Color.Tan;
-            this.MI_TYPE1.BackColor = Color.DarkSlateGray;
-            this.MI_TYPE2.ForeColor = Color.Black;
-            this.MI_TYPE2.BackColor = Color.Tan;
-            formatType = 'A';
-            ReadTextA(this.txtFilePath.Text.ToUpper());
-        }
-
-        private void MI_TYPE2_Click(object sender, EventArgs e)
-        {
-            this.MI_TYPE1.ForeColor = Color.Black;
-            this.MI_TYPE1.BackColor = Color.Tan;
-            this.MI_TYPE2.ForeColor = Color.Tan;
-            this.MI_TYPE2.BackColor = Color.DarkSlateGray;
-            formatType = 'B';
-            ReadTextB(this.txtFilePath.Text.ToUpper());
-        }
-
-        private void mi_import_answer_Click(object sender, EventArgs e)
-        {
-            OpenFileDialog ofd = new OpenFileDialog();
-            ofd.Filter = "text|*.txt";//|docx|*.docx|97-word|*.doc
-            ofd.ShowDialog();
-            string strFile = ofd.FileName.ToUpper();
-            if (strFile.EndsWith(".TXT"))
+            string strValue = this.libBatch.SelectedValue.ToString();
+            if (string.IsNullOrEmpty(strValue))
+                return;
+            this.btnDelete.Enabled = false;
+            try
             {
-                if (formatType == 'B')
-                {
-                    ReadAnswers(strFile);
-                }
+                this.tpBar.Value = 0;
+                con.Open();
+                SqlCommand com = new SqlCommand();
+                com.Connection = con;
+                com.CommandType = CommandType.Text;
+
+                string strSql = "DELETE LSS_EXAM_QUESTIONS_KEY WHERE QUESTIONS_ID IN(SELECT QUESTIONS_ID FROM LSS_EXAM_QUESTIONS WHERE REAL_BATCH_ID='" + strValue + "');DELETE LSS_EXAM_QUESTIONS WHERE REAL_BATCH_ID='" + strValue + "';SELECT DISTINCT REAL_BATCH_ID FROM LSS_EXAM_QUESTIONS;";
+                com.CommandText = strSql;
+
+                DataTable dt = new DataTable();
+                SqlDataAdapter ad = new SqlDataAdapter(com);
+                this.tpBar.Value = 50;
+                ad.Fill(dt);
+                this.libBatch.DataSource = dt;
+                this.libBatch.DisplayMember = "REAL_BATCH_ID";
+                this.libBatch.ValueMember = "REAL_BATCH_ID";
+                //dr.Close();
+            }
+            catch (Exception err)
+            {
+                MessageBox.Show(err.Message);
+            }
+            finally
+            {
+                con.Close();//关闭数据库
+                this.btnDelete.Enabled = true;
+                this.tpBar.Value = 100;
+            }
+
+        }
+
+        private void PaperHandler_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (con.State != ConnectionState.Closed)
+            {
+                con.Close();
             }
         }
 
+        private void libBatch_DoubleClick(object sender, EventArgs e)
+        {
+            if (cstatus != '0')
+                return;
+            cstatus = '1';
+            string strValue = this.libBatch.SelectedValue.ToString();
+
+            if (string.IsNullOrEmpty(strValue))
+                return;
+            try
+            {
+                this.tpBar.Value = 0;
+                con.Open();
+                SqlCommand com = new SqlCommand();
+                com.Connection = con;
+                com.CommandType = CommandType.Text;
+
+                string strSql = "SELECT * FROM LSS_EXAM_QUESTIONS WHERE REAL_BATCH_ID='" + strValue + "' ORDER BY SEQ_NUM";
+                com.CommandText = strSql;
+
+                DataTable dt = new DataTable();
+                SqlDataAdapter ad = new SqlDataAdapter(com);
+                this.tpBar.Value = 50;
+                ad.Fill(dt);
+                this.dataGridView2.DataSource = dt;
+                //dr.Close();
+            }
+            catch (Exception err)
+            {
+                MessageBox.Show(err.Message);
+            }
+            finally
+            {
+                con.Close();//关闭数据库
+                cstatus = '0';
+                this.tpBar.Value = 100;
+            }
+        }
     }
 }
