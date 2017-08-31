@@ -32,17 +32,6 @@
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.listBox1 = new System.Windows.Forms.ListBox();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.SEQ_NUM = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Q_SEQ_NUM = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.QUESTIONS_DESC = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.QUESTIONS_TYPE = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.OPTION_A = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.OPTION_B = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.OPTION_C = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.OPTION_D = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ANSWER = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ANALYSIS = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ROWS = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.ckbOptionHead = new System.Windows.Forms.CheckBox();
@@ -80,6 +69,18 @@
             this.label3 = new System.Windows.Forms.Label();
             this.txtYear = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
+            this.SEQ_NUM = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Q_SEQ_NUM = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.QUESTIONS_DESC = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.QUESTIONS_TYPE = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.OPTION_A = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.OPTION_B = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.OPTION_C = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.OPTION_D = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.OPTION_E = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ANSWER = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ANALYSIS = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ROWS = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -147,6 +148,7 @@
             this.OPTION_B,
             this.OPTION_C,
             this.OPTION_D,
+            this.OPTION_E,
             this.ANSWER,
             this.ANALYSIS,
             this.ROWS});
@@ -158,82 +160,6 @@
             this.dataGridView1.Size = new System.Drawing.Size(602, 364);
             this.dataGridView1.TabIndex = 0;
             this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
-            // 
-            // SEQ_NUM
-            // 
-            this.SEQ_NUM.DataPropertyName = "SEQ_NUM";
-            this.SEQ_NUM.HeaderText = "序号";
-            this.SEQ_NUM.Name = "SEQ_NUM";
-            this.SEQ_NUM.Width = 40;
-            // 
-            // Q_SEQ_NUM
-            // 
-            this.Q_SEQ_NUM.DataPropertyName = "Q_SEQ_NUM";
-            this.Q_SEQ_NUM.HeaderText = "行号";
-            this.Q_SEQ_NUM.Name = "Q_SEQ_NUM";
-            this.Q_SEQ_NUM.Width = 40;
-            // 
-            // QUESTIONS_DESC
-            // 
-            this.QUESTIONS_DESC.DataPropertyName = "QUESTIONS_DESC";
-            this.QUESTIONS_DESC.HeaderText = "题目";
-            this.QUESTIONS_DESC.Name = "QUESTIONS_DESC";
-            this.QUESTIONS_DESC.Width = 300;
-            // 
-            // QUESTIONS_TYPE
-            // 
-            this.QUESTIONS_TYPE.DataPropertyName = "QUESTIONS_TYPE";
-            this.QUESTIONS_TYPE.HeaderText = "类型";
-            this.QUESTIONS_TYPE.Name = "QUESTIONS_TYPE";
-            this.QUESTIONS_TYPE.Width = 70;
-            // 
-            // OPTION_A
-            // 
-            this.OPTION_A.DataPropertyName = "OPTION_A";
-            this.OPTION_A.HeaderText = "A";
-            this.OPTION_A.Name = "OPTION_A";
-            this.OPTION_A.Width = 120;
-            // 
-            // OPTION_B
-            // 
-            this.OPTION_B.DataPropertyName = "OPTION_B";
-            this.OPTION_B.HeaderText = "B";
-            this.OPTION_B.Name = "OPTION_B";
-            this.OPTION_B.Width = 120;
-            // 
-            // OPTION_C
-            // 
-            this.OPTION_C.DataPropertyName = "OPTION_C";
-            this.OPTION_C.HeaderText = "C";
-            this.OPTION_C.Name = "OPTION_C";
-            this.OPTION_C.Width = 120;
-            // 
-            // OPTION_D
-            // 
-            this.OPTION_D.DataPropertyName = "OPTION_D";
-            this.OPTION_D.HeaderText = "D";
-            this.OPTION_D.Name = "OPTION_D";
-            this.OPTION_D.Width = 120;
-            // 
-            // ANSWER
-            // 
-            this.ANSWER.DataPropertyName = "ANSWER";
-            this.ANSWER.HeaderText = "答案";
-            this.ANSWER.Name = "ANSWER";
-            this.ANSWER.Width = 40;
-            // 
-            // ANALYSIS
-            // 
-            this.ANALYSIS.DataPropertyName = "ANALYSIS";
-            this.ANALYSIS.HeaderText = "解析";
-            this.ANALYSIS.Name = "ANALYSIS";
-            this.ANALYSIS.Width = 120;
-            // 
-            // ROWS
-            // 
-            this.ROWS.DataPropertyName = "ROWS";
-            this.ROWS.HeaderText = "文本行";
-            this.ROWS.Name = "ROWS";
             // 
             // splitContainer2
             // 
@@ -365,7 +291,7 @@
             // toolStripMenuItem1
             // 
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(124, 22);
             this.toolStripMenuItem1.Text = "重新读取";
             this.toolStripMenuItem1.Click += new System.EventHandler(this.toolStripMenuItem1_Click);
             // 
@@ -373,26 +299,26 @@
             // 
             this.格式1ToolStripMenuItem.Image = global::SySoft.Properties.Resources.forwardarr;
             this.格式1ToolStripMenuItem.Name = "格式1ToolStripMenuItem";
-            this.格式1ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.格式1ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
             this.格式1ToolStripMenuItem.Text = "格式1";
             this.格式1ToolStripMenuItem.Click += new System.EventHandler(this.格式1ToolStripMenuItem_Click);
             // 
             // 格式2ToolStripMenuItem
             // 
             this.格式2ToolStripMenuItem.Name = "格式2ToolStripMenuItem";
-            this.格式2ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.格式2ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
             this.格式2ToolStripMenuItem.Text = "格式2";
             this.格式2ToolStripMenuItem.Click += new System.EventHandler(this.格式2ToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(149, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(121, 6);
             // 
             // 导入答案ToolStripMenuItem
             // 
             this.导入答案ToolStripMenuItem.Name = "导入答案ToolStripMenuItem";
-            this.导入答案ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.导入答案ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
             this.导入答案ToolStripMenuItem.Text = "答案...";
             this.导入答案ToolStripMenuItem.Click += new System.EventHandler(this.导入答案ToolStripMenuItem_Click);
             // 
@@ -616,6 +542,88 @@
             this.label2.TabIndex = 1;
             this.label2.Text = "关键字";
             // 
+            // SEQ_NUM
+            // 
+            this.SEQ_NUM.DataPropertyName = "SEQ_NUM";
+            this.SEQ_NUM.HeaderText = "序号";
+            this.SEQ_NUM.Name = "SEQ_NUM";
+            this.SEQ_NUM.Width = 40;
+            // 
+            // Q_SEQ_NUM
+            // 
+            this.Q_SEQ_NUM.DataPropertyName = "Q_SEQ_NUM";
+            this.Q_SEQ_NUM.HeaderText = "行号";
+            this.Q_SEQ_NUM.Name = "Q_SEQ_NUM";
+            this.Q_SEQ_NUM.Width = 40;
+            // 
+            // QUESTIONS_DESC
+            // 
+            this.QUESTIONS_DESC.DataPropertyName = "QUESTIONS_DESC";
+            this.QUESTIONS_DESC.HeaderText = "题目";
+            this.QUESTIONS_DESC.Name = "QUESTIONS_DESC";
+            this.QUESTIONS_DESC.Width = 300;
+            // 
+            // QUESTIONS_TYPE
+            // 
+            this.QUESTIONS_TYPE.DataPropertyName = "QUESTIONS_TYPE";
+            this.QUESTIONS_TYPE.HeaderText = "类型";
+            this.QUESTIONS_TYPE.Name = "QUESTIONS_TYPE";
+            this.QUESTIONS_TYPE.Width = 70;
+            // 
+            // OPTION_A
+            // 
+            this.OPTION_A.DataPropertyName = "OPTION_A";
+            this.OPTION_A.HeaderText = "A";
+            this.OPTION_A.Name = "OPTION_A";
+            this.OPTION_A.Width = 120;
+            // 
+            // OPTION_B
+            // 
+            this.OPTION_B.DataPropertyName = "OPTION_B";
+            this.OPTION_B.HeaderText = "B";
+            this.OPTION_B.Name = "OPTION_B";
+            this.OPTION_B.Width = 120;
+            // 
+            // OPTION_C
+            // 
+            this.OPTION_C.DataPropertyName = "OPTION_C";
+            this.OPTION_C.HeaderText = "C";
+            this.OPTION_C.Name = "OPTION_C";
+            this.OPTION_C.Width = 120;
+            // 
+            // OPTION_D
+            // 
+            this.OPTION_D.DataPropertyName = "OPTION_D";
+            this.OPTION_D.HeaderText = "D";
+            this.OPTION_D.Name = "OPTION_D";
+            this.OPTION_D.Width = 120;
+            // 
+            // OPTION_E
+            // 
+            this.OPTION_E.DataPropertyName = "OPTION_E";
+            this.OPTION_E.HeaderText = "E";
+            this.OPTION_E.Name = "OPTION_E";
+            // 
+            // ANSWER
+            // 
+            this.ANSWER.DataPropertyName = "ANSWER";
+            this.ANSWER.HeaderText = "答案";
+            this.ANSWER.Name = "ANSWER";
+            this.ANSWER.Width = 40;
+            // 
+            // ANALYSIS
+            // 
+            this.ANALYSIS.DataPropertyName = "ANALYSIS";
+            this.ANALYSIS.HeaderText = "解析";
+            this.ANALYSIS.Name = "ANALYSIS";
+            this.ANALYSIS.Width = 120;
+            // 
+            // ROWS
+            // 
+            this.ROWS.DataPropertyName = "ROWS";
+            this.ROWS.HeaderText = "文本行";
+            this.ROWS.Name = "ROWS";
+            // 
             // PaperHandler
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -629,6 +637,7 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "试题格式化-powered by rcode@163.com";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.PaperHandler_FormClosing);
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.PaperHandler_FormClosed);
             this.Load += new System.EventHandler(this.Form1_Load);
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);
@@ -687,17 +696,6 @@
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.Button btnUpdate;
-        private System.Windows.Forms.DataGridViewTextBoxColumn SEQ_NUM;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Q_SEQ_NUM;
-        private System.Windows.Forms.DataGridViewTextBoxColumn QUESTIONS_DESC;
-        private System.Windows.Forms.DataGridViewTextBoxColumn QUESTIONS_TYPE;
-        private System.Windows.Forms.DataGridViewTextBoxColumn OPTION_A;
-        private System.Windows.Forms.DataGridViewTextBoxColumn OPTION_B;
-        private System.Windows.Forms.DataGridViewTextBoxColumn OPTION_C;
-        private System.Windows.Forms.DataGridViewTextBoxColumn OPTION_D;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ANSWER;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ANALYSIS;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ROWS;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.ComboBox dplKey;
         private System.Windows.Forms.Label label3;
@@ -712,6 +710,18 @@
         private System.Windows.Forms.Button btnDelete;
         private System.Windows.Forms.DataGridView dataGridView2;
         private System.Windows.Forms.Button btnGetBatch;
+        private System.Windows.Forms.DataGridViewTextBoxColumn SEQ_NUM;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Q_SEQ_NUM;
+        private System.Windows.Forms.DataGridViewTextBoxColumn QUESTIONS_DESC;
+        private System.Windows.Forms.DataGridViewTextBoxColumn QUESTIONS_TYPE;
+        private System.Windows.Forms.DataGridViewTextBoxColumn OPTION_A;
+        private System.Windows.Forms.DataGridViewTextBoxColumn OPTION_B;
+        private System.Windows.Forms.DataGridViewTextBoxColumn OPTION_C;
+        private System.Windows.Forms.DataGridViewTextBoxColumn OPTION_D;
+        private System.Windows.Forms.DataGridViewTextBoxColumn OPTION_E;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ANSWER;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ANALYSIS;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ROWS;
     }
 }
 

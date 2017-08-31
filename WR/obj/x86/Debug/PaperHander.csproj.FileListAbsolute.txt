@@ -1,0 +1,17 @@
+F:\MyDoc\Wr\WR\bin\Debug\SySoft.exe.manifest
+F:\MyDoc\Wr\WR\bin\Debug\SySoft.application
+F:\MyDoc\Wr\WR\bin\Debug\SySoft.exe
+F:\MyDoc\Wr\WR\bin\Debug\SySoft.pdb
+F:\MyDoc\Wr\WR\bin\Debug\ICSharpCode.SharpZipLib.dll
+F:\MyDoc\Wr\WR\bin\Debug\NPOI.dll
+F:\MyDoc\Wr\WR\bin\Debug\NPOI.OOXML.dll
+F:\MyDoc\Wr\WR\bin\Debug\NPOI.OpenXml4Net.dll
+F:\MyDoc\Wr\WR\bin\Debug\NPOI.OpenXmlFormats.dll
+F:\MyDoc\Wr\WR\bin\Debug\NPOI.xml
+F:\MyDoc\Wr\WR\obj\x86\Debug\SySoft.PaperHandler.resources
+F:\MyDoc\Wr\WR\obj\x86\Debug\SySoft.Properties.Resources.resources
+F:\MyDoc\Wr\WR\obj\x86\Debug\PaperHander.csproj.GenerateResource.Cache
+F:\MyDoc\Wr\WR\obj\x86\Debug\SySoft.exe.manifest
+F:\MyDoc\Wr\WR\obj\x86\Debug\SySoft.application
+F:\MyDoc\Wr\WR\obj\x86\Debug\SySoft.exe
+F:\MyDoc\Wr\WR\obj\x86\Debug\SySoft.pdb

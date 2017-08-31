@@ -28,7 +28,7 @@ namespace SySoft
         private void Form1_Load(object sender, EventArgs e)
         {
             con = new SqlConnection();
-            con.ConnectionString = "server=;database=;uid=sa;pwd=";
+            con.ConnectionString = "server=47.94.92.223;database=Oes;uid=sa;pwd=ocssm137!#";
             this.txtFilePath.Text = "请选择导入文件！";
             this.txtYear.Text = DateTime.Now.Year.ToString();
             this.txtBatchNo.Text = DateTime.Now.ToString("yyyyMMddmmss");
@@ -86,6 +86,7 @@ namespace SySoft
                 dtQuestion.Columns.Add(new DataColumn("OPTION_B", Type.GetType("System.String")));
                 dtQuestion.Columns.Add(new DataColumn("OPTION_C", Type.GetType("System.String")));
                 dtQuestion.Columns.Add(new DataColumn("OPTION_D", Type.GetType("System.String")));
+                dtQuestion.Columns.Add(new DataColumn("OPTION_E", Type.GetType("System.String")));
                 dtQuestion.Columns.Add(new DataColumn("ANSWER", Type.GetType("System.String")));
                 dtQuestion.Columns.Add(new DataColumn("ANALYSIS", Type.GetType("System.String")));
                 dtQuestion.Columns.Add(new DataColumn("ROWS", Type.GetType("System.Int32")));
@@ -94,218 +95,228 @@ namespace SySoft
                 DataRow drNew = dtQuestion.NewRow();
                 int i = 0, j = 0;
                 this.tpBar.Value = 0;
-                while ((strLine = sr.ReadLine()) != null)
+                try
                 {
-                    strLine = strLine.Replace("　", "");
-                    i++;
-                    this.listBox1.Items.Add(strLine);
-                    if (strLine.Replace(" ", "") == string.Empty)
+                    while ((strLine = sr.ReadLine()) != null)
                     {
-                        isStart = false;
-                        if (!string.IsNullOrEmpty(drNew["QUESTIONS_DESC"].ToString()))
+                        strLine = strLine.Replace("　", "");
+                        i++;
+                        this.listBox1.Items.Add(strLine);
+                        if (strLine.Replace(" ", "") == string.Empty)
                         {
-                            dtQuestion.Rows.Add(drNew);
-                            drNew = dtQuestion.NewRow();
-                        }
-                        else
-                        {
-                            continue;
-                        }
-                    }
-                    else if (Regex.IsMatch(strLine, @"^\d+"))
-                    {
-                        isStart = true;
-                        if (!string.IsNullOrEmpty(drNew["QUESTIONS_DESC"].ToString()))
-                        {
-                            dtQuestion.Rows.Add(drNew);
-                            drNew = dtQuestion.NewRow();
-                        }
-                    }
-                    if (!isStart)
-                    {
-                        if (strLine.Contains("单项选择题"))
-                        {
-                            strCurrentType = "单项选择题";
-                        }
-                        else if (strLine.Contains("多项选择题"))
-                        {
-                            strCurrentType = "多项选择题";
-                        }
-                        else if (strLine.Contains("判断题"))
-                        {
-                            strCurrentType = "判断题";
-                        }
-                        else if (strLine.Contains("不定项选择题"))
-                        {
-                            strCurrentType = "不定项选择题";
-                        }
-                        if (strCurrentType == "")
-                        {
-                            continue;
-                        }
-                        else
-                        {
-                            Regex regx = new Regex(@"^\d{1}");
-                            if (regx.IsMatch(strLine))
+                            isStart = false;
+                            if (!string.IsNullOrEmpty(drNew["QUESTIONS_DESC"].ToString()))
                             {
-                                isStart = true;
-                            }
-                        }
-                    }
-                    if (isStart)
-                    {
-                        if (string.IsNullOrEmpty(drNew["QUESTIONS_DESC"].ToString()))
-                        {
-                            drNew["SEQ_NUM"] = ++j;
-                            strLine = Regex.Replace(strLine, @"^\d+", "").Trim();
-                            strLine = Regex.Replace(strLine, @"^.", "").Trim();
-                            strLine = Regex.Replace(strLine, @"^、", "").Trim();
-                            drNew["QUESTIONS_DESC"] = strLine;
-                            drNew["QUESTIONS_TYPE"] = strCurrentType;
-                            drNew["ROWS"] = i;
-                        }
-                        else
-                        {
-                            if (strCurrentType == "判断题")
-                            {
-                                if (string.IsNullOrEmpty(drNew["ANSWER"].ToString()))
-                                {
-                                    if (strLine.Contains("【答案】"))
-                                    {
-                                        drNew["ANSWER"] = strLine.Replace("【答案】", "").Replace(" ", "");
-                                    }
-                                }
-                                else if (string.IsNullOrEmpty(drNew["ANALYSIS"].ToString()))
-                                {
-                                    if (strLine.Contains("【解析】"))
-                                    {
-                                        drNew["ANALYSIS"] = strLine.Replace("【解析】", "").Replace(" ", "");
-                                    }
-                                }
-
+                                dtQuestion.Rows.Add(drNew);
+                                drNew = dtQuestion.NewRow();
                             }
                             else
                             {
-                                if (string.IsNullOrEmpty(drNew["OPTION_A"].ToString()))
+                                continue;
+                            }
+                        }
+                        else if (Regex.IsMatch(strLine, @"^\d+"))
+                        {
+                            isStart = true;
+                            if (!string.IsNullOrEmpty(drNew["QUESTIONS_DESC"].ToString()))
+                            {
+                                dtQuestion.Rows.Add(drNew);
+                                drNew = dtQuestion.NewRow();
+                            }
+                        }
+                        if (!isStart)
+                        {
+                            if (strLine.Contains("单项选择题"))
+                            {
+                                strCurrentType = "单项选择题";
+                            }
+                            else if (strLine.Contains("多项选择题"))
+                            {
+                                strCurrentType = "多项选择题";
+                            }
+                            else if (strLine.Contains("判断题"))
+                            {
+                                strCurrentType = "判断题";
+                            }
+                            else if (strLine.Contains("不定项选择题"))
+                            {
+                                strCurrentType = "不定项选择题";
+                            }
+                            if (strCurrentType == "")
+                            {
+                                continue;
+                            }
+                            else
+                            {
+                                Regex regx = new Regex(@"^\d{1}");
+                                if (regx.IsMatch(strLine))
                                 {
-                                    if (strLine.Contains("  D"))
+                                    isStart = true;
+                                }
+                            }
+                        }
+                        if (isStart)
+                        {
+                            if (string.IsNullOrEmpty(drNew["QUESTIONS_DESC"].ToString()))
+                            {
+                                drNew["SEQ_NUM"] = ++j;
+                                strLine = Regex.Replace(strLine, @"^\d+", "").Trim();
+                                strLine = Regex.Replace(strLine, @"^.", "").Trim();
+                                strLine = Regex.Replace(strLine, @"^、", "").Trim();
+                                drNew["QUESTIONS_DESC"] = strLine;
+                                drNew["QUESTIONS_TYPE"] = strCurrentType;
+                                drNew["ROWS"] = i;
+                            }
+                            else
+                            {
+                                if (strCurrentType == "判断题")
+                                {
+                                    if (string.IsNullOrEmpty(drNew["ANSWER"].ToString()))
                                     {
-                                        string strTmp = strLine.Substring(strLine.IndexOf("  D"));
-                                        drNew["OPTION_D"] = GetFormatString(strTmp);
-                                        strLine = strLine.Replace(strTmp, "");
-                                        strTmp = strLine.Substring(strLine.IndexOf("  C"));
-                                        drNew["OPTION_C"] = GetFormatString(strTmp);
-                                        strLine = strLine.Replace(strTmp, "");
-                                        strTmp = strLine.Substring(strLine.IndexOf("  B"));
-                                        drNew["OPTION_B"] = GetFormatString(strTmp);
-                                        strLine = strLine.Replace(strTmp, "");
-                                        drNew["OPTION_A"] = GetFormatString(strLine);
+                                        if (strLine.Contains("【答案】"))
+                                        {
+                                            drNew["ANSWER"] = strLine.Replace("【答案】", "").Replace(" ", "");
+                                        }
                                     }
-                                    else if (strLine.Contains("\tD"))
+                                    else if (string.IsNullOrEmpty(drNew["ANALYSIS"].ToString()))
                                     {
-                                        string strTmp = strLine.Substring(strLine.IndexOf("\tD"));
-                                        drNew["OPTION_D"] = GetFormatString(strTmp);
-                                        strLine = strLine.Replace(strTmp, "");
+                                        if (strLine.Contains("【解析】"))
+                                        {
+                                            drNew["ANALYSIS"] = strLine.Replace("【解析】", "").Replace(" ", "");
+                                        }
+                                    }
 
-                                        if (strLine.IndexOf("\tC") > 0)
-                                        {
-                                            strTmp = strLine.Substring(strLine.IndexOf("\tC"));
-                                        }
-                                        else
-                                        {
-                                            strTmp = strLine.Substring(strLine.IndexOf("  C"));
-                                        }
-
-                                        drNew["OPTION_C"] = GetFormatString(strTmp);
-                                        strLine = strLine.Replace(strTmp, "");
-                                        if (strLine.IndexOf("\tB") > 0)
-                                        {
-                                            strTmp = strLine.Substring(strLine.IndexOf("\tB"));
-                                        }
-                                        else
-                                        {
-                                            strTmp = strLine.Substring(strLine.IndexOf("  B"));
-                                        }
-                                        drNew["OPTION_B"] = GetFormatString(strTmp);
-                                        strLine = strLine.Replace(strTmp, "");
-                                        drNew["OPTION_A"] = GetFormatString(strLine);
-                                    }
-                                    else if (strLine.Contains("  B"))
-                                    {
-                                        drNew["OPTION_A"] = GetFormatString(strLine.Substring(0, strLine.IndexOf("  B")));
-                                        drNew["OPTION_B"] = GetFormatString(strLine.Substring(strLine.IndexOf("  B")));
-                                    }
-                                    else if (strLine.Contains("\tB"))
-                                    {
-                                        drNew["OPTION_A"] = GetFormatString(strLine.Substring(0, strLine.IndexOf("\tB")));
-                                        drNew["OPTION_B"] = GetFormatString(strLine.Substring(strLine.IndexOf("\tB")));
-                                    }
-                                    else if (strLine.Contains("  C"))
-                                    {
-                                        drNew["OPTION_C"] = GetFormatString(strLine.Substring(strLine.IndexOf("  C")));
-                                    }
-                                    else if (strLine.Contains("\tC"))
-                                    {
-                                        drNew["OPTION_C"] = GetFormatString(strLine.Substring(strLine.IndexOf("\tC")));
-                                    }
-                                    else
-                                    {
-                                        drNew["OPTION_A"] = GetFormatString(strLine);
-                                    }
-                                }
-                                else if (string.IsNullOrEmpty(drNew["OPTION_B"].ToString()))
-                                {
-                                    drNew["OPTION_B"] = GetFormatString(strLine);
-                                }
-                                else if (string.IsNullOrEmpty(drNew["OPTION_C"].ToString()))
-                                {
-                                    if (strLine.Contains("  D"))
-                                    {
-                                        drNew["OPTION_C"] = GetFormatString(strLine.Substring(0, strLine.IndexOf("  D")));
-                                        drNew["OPTION_D"] = GetFormatString(strLine.Substring(strLine.IndexOf("  D")));
-                                    }
-                                    else if (strLine.Contains("\tD"))
-                                    {
-                                        drNew["OPTION_C"] = GetFormatString(strLine.Substring(0, strLine.IndexOf("\tD")));
-                                        drNew["OPTION_D"] = GetFormatString(strLine.Substring(strLine.IndexOf("\tD")));
-                                    }
-                                    else
-                                    {
-                                        drNew["OPTION_C"] = GetFormatString(strLine);
-                                    }
-                                }
-                                else if (string.IsNullOrEmpty(drNew["OPTION_D"].ToString()))
-                                {
-                                    drNew["OPTION_D"] = GetFormatString(strLine);
-                                }
-                                else if (string.IsNullOrEmpty(drNew["ANSWER"].ToString()))
-                                {
-                                    if (strLine.Contains("【答案】"))
-                                    {
-                                        drNew["ANSWER"] = strLine.Replace("【答案】", "").Replace(" ", "");
-                                    }
-                                }
-                                else if (string.IsNullOrEmpty(drNew["ANALYSIS"].ToString()))
-                                {
-                                    if (strLine.Contains("【解析】"))
-                                    {
-                                        drNew["ANALYSIS"] = strLine.Replace("【解析】", "").Replace(" ", "");
-                                    }
                                 }
                                 else
                                 {
-                                    drNew["ANALYSIS"] = drNew["ANALYSIS"].ToString() + "\n" + strLine;
+                                    if (string.IsNullOrEmpty(drNew["OPTION_A"].ToString()))
+                                    {
+                                        if (strLine.Contains("  D"))
+                                        {
+                                            string strTmp = strLine.Substring(strLine.IndexOf("  D"));
+                                            drNew["OPTION_D"] = GetFormatString(strTmp);
+                                            strLine = strLine.Replace(strTmp, "");
+                                            strTmp = strLine.Substring(strLine.IndexOf("  C"));
+                                            drNew["OPTION_C"] = GetFormatString(strTmp);
+                                            strLine = strLine.Replace(strTmp, "");
+                                            strTmp = strLine.Substring(strLine.IndexOf("  B"));
+                                            drNew["OPTION_B"] = GetFormatString(strTmp);
+                                            strLine = strLine.Replace(strTmp, "");
+                                            drNew["OPTION_A"] = GetFormatString(strLine);
+                                        }
+                                        else if (strLine.Contains("\tD"))
+                                        {
+                                            string strTmp = strLine.Substring(strLine.IndexOf("\tD"));
+                                            drNew["OPTION_D"] = GetFormatString(strTmp);
+                                            strLine = strLine.Replace(strTmp, "");
+
+                                            if (strLine.IndexOf("\tC") > 0)
+                                            {
+                                                strTmp = strLine.Substring(strLine.IndexOf("\tC"));
+                                            }
+                                            else
+                                            {
+                                                strTmp = strLine.Substring(strLine.IndexOf("  C"));
+                                            }
+
+                                            drNew["OPTION_C"] = GetFormatString(strTmp);
+                                            strLine = strLine.Replace(strTmp, "");
+                                            if (strLine.IndexOf("\tB") > 0)
+                                            {
+                                                strTmp = strLine.Substring(strLine.IndexOf("\tB"));
+                                            }
+                                            else
+                                            {
+                                                strTmp = strLine.Substring(strLine.IndexOf("  B"));
+                                            }
+                                            drNew["OPTION_B"] = GetFormatString(strTmp);
+                                            strLine = strLine.Replace(strTmp, "");
+                                            drNew["OPTION_A"] = GetFormatString(strLine);
+                                        }
+                                        else if (strLine.Contains("  B"))
+                                        {
+                                            drNew["OPTION_A"] = GetFormatString(strLine.Substring(0, strLine.IndexOf("  B")));
+                                            drNew["OPTION_B"] = GetFormatString(strLine.Substring(strLine.IndexOf("  B")));
+                                        }
+                                        else if (strLine.Contains("\tB"))
+                                        {
+                                            drNew["OPTION_A"] = GetFormatString(strLine.Substring(0, strLine.IndexOf("\tB")));
+                                            drNew["OPTION_B"] = GetFormatString(strLine.Substring(strLine.IndexOf("\tB")));
+                                        }
+                                        else if (strLine.Contains("  C"))
+                                        {
+                                            drNew["OPTION_C"] = GetFormatString(strLine.Substring(strLine.IndexOf("  C")));
+                                        }
+                                        else if (strLine.Contains("\tC"))
+                                        {
+                                            drNew["OPTION_C"] = GetFormatString(strLine.Substring(strLine.IndexOf("\tC")));
+                                        }
+                                        else
+                                        {
+                                            drNew["OPTION_A"] = GetFormatString(strLine);
+                                        }
+                                    }
+                                    else if (string.IsNullOrEmpty(drNew["OPTION_B"].ToString()))
+                                    {
+                                        drNew["OPTION_B"] = GetFormatString(strLine);
+                                    }
+                                    else if (string.IsNullOrEmpty(drNew["OPTION_C"].ToString()))
+                                    {
+                                        if (strLine.Contains("  D"))
+                                        {
+                                            drNew["OPTION_C"] = GetFormatString(strLine.Substring(0, strLine.IndexOf("  D")));
+                                            drNew["OPTION_D"] = GetFormatString(strLine.Substring(strLine.IndexOf("  D")));
+                                        }
+                                        else if (strLine.Contains("\tD"))
+                                        {
+                                            drNew["OPTION_C"] = GetFormatString(strLine.Substring(0, strLine.IndexOf("\tD")));
+                                            drNew["OPTION_D"] = GetFormatString(strLine.Substring(strLine.IndexOf("\tD")));
+                                        }
+                                        else
+                                        {
+                                            drNew["OPTION_C"] = GetFormatString(strLine);
+                                        }
+                                    }
+                                    else if (string.IsNullOrEmpty(drNew["OPTION_D"].ToString()))
+                                    {
+                                        drNew["OPTION_D"] = GetFormatString(strLine);
+                                    }
+                                    else if (string.IsNullOrEmpty(drNew["ANSWER"].ToString()))
+                                    {
+                                        if (strLine.Contains("【答案】"))
+                                        {
+                                            drNew["ANSWER"] = strLine.Replace("【答案】", "").Replace(" ", "");
+                                        }
+                                    }
+                                    else if (string.IsNullOrEmpty(drNew["ANALYSIS"].ToString()))
+                                    {
+                                        if (strLine.Contains("【解析】"))
+                                        {
+                                            drNew["ANALYSIS"] = strLine.Replace("【解析】", "").Replace(" ", "");
+                                        }
+                                    }
+                                    else
+                                    {
+                                        drNew["ANALYSIS"] = drNew["ANALYSIS"].ToString() + "\n" + strLine;
+                                    }
                                 }
                             }
                         }
                     }
                 }
+                catch (Exception err)
+                {
+                    MessageBox.Show(err.Message);
+                }
+                finally
+                {
+                    sr.Close();
+                    sr.Dispose();
+                }
                 dtQuestion.AcceptChanges();
                 //this.dataGridView1.DataSource = dtQuestion;
 
                 this.tpBar.Value = 100;
-                sr.Close();
-                sr.Dispose();
             }
         }
 
@@ -342,7 +353,6 @@ namespace SySoft
             if (strFile.EndsWith(".TXT"))
             {
                 this.listBox1.Items.Clear();
-                StreamReader sr = new StreamReader(strFile, Encoding.Default);
                 string strLine = "";
                 bool isStart = false;
 
@@ -368,6 +378,7 @@ namespace SySoft
                 dtQuestion.Columns.Add(new DataColumn("OPTION_B", Type.GetType("System.String")));
                 dtQuestion.Columns.Add(new DataColumn("OPTION_C", Type.GetType("System.String")));
                 dtQuestion.Columns.Add(new DataColumn("OPTION_D", Type.GetType("System.String")));
+                dtQuestion.Columns.Add(new DataColumn("OPTION_E", Type.GetType("System.String")));
                 dtQuestion.Columns.Add(new DataColumn("ANSWER", Type.GetType("System.String")));
                 dtQuestion.Columns.Add(new DataColumn("ANALYSIS", Type.GetType("System.String")));
                 dtQuestion.Columns.Add(new DataColumn("ROWS", Type.GetType("System.Int32")));
@@ -378,63 +389,81 @@ namespace SySoft
 
                 char ctype = ' ';
                 Regex tirg = new Regex(@"^\d+\．");
-                Regex oprg = new Regex(@"^[A-D]{1}\.");
+                Regex oprg = new Regex(@"^[A-E]{1}\.");
                 Regex opother = new Regex(@"^第 \d* 页");
                 Regex opsl = new Regex(@"^版权所有");
                 int i = 0, j = 0;
-                while ((strLine = sr.ReadLine()) != null)
+
+                StreamReader sr = new StreamReader(strFile, Encoding.Default);
+                try
                 {
-                    strLine = strLine.Replace("　", "").Replace("\t", "").ToUpper().Trim();
-
-                    if (opother.IsMatch(strLine)) { continue; }
-
-                    if (opsl.IsMatch(strLine)) { continue; }
-
-                    i++;
-                    this.listBox1.Items.Add(strLine);
-                    if (string.IsNullOrEmpty(strLine))
-                        continue;
-
-                    if (tirg.IsMatch(strLine))
+                    while ((strLine = sr.ReadLine()) != null)
                     {
-                        string strQSeqNum = strLine.Substring(0, strLine.IndexOf("．"));
-                        ctype = 'T';
-                        if (!string.IsNullOrEmpty(drNew["QUESTIONS_DESC"].ToString()))
+                        strLine = strLine.Replace("　", "").Replace("\t", "").ToUpper().Trim();
+
+                        if (opother.IsMatch(strLine)) { continue; }
+
+                        if (opsl.IsMatch(strLine)) { continue; }
+
+                        i++;
+                        this.listBox1.Items.Add(strLine);
+                        if (string.IsNullOrEmpty(strLine))
+                            continue;
+
+                        if (tirg.IsMatch(strLine))
                         {
-                            dtQuestion.Rows.Add(drNew);
-                            drNew = dtQuestion.NewRow();
-                        }
-                        strLine = strLine.Substring(strQSeqNum.Length + 1).Trim();
-                        drNew["Q_SEQ_NUM"] = strQSeqNum;
-                        drNew["QUESTIONS_TYPE"] = strType;
-                        drNew["SEQ_NUM"] = ++j;
-                        drNew["ROWS"] = i;
+                            string strQSeqNum = strLine.Substring(0, strLine.IndexOf("．"));
+                            ctype = 'T';
+                            if (!string.IsNullOrEmpty(drNew["QUESTIONS_DESC"].ToString()))
+                            {
+                                dtQuestion.Rows.Add(drNew);
+                                drNew = dtQuestion.NewRow();
+                            }
+                            strLine = strLine.Substring(strQSeqNum.Length + 1).Trim();
+                            drNew["Q_SEQ_NUM"] = strQSeqNum;
+                            drNew["QUESTIONS_TYPE"] = strType;
+                            drNew["SEQ_NUM"] = ++j;
+                            drNew["ROWS"] = i;
 
+                        }
+                        if (oprg.IsMatch(strLine))
+                        {
+                            ctype = strLine.Substring(0, 1).ToUpper().ToCharArray()[0];
+                        }
+                        if (ctype == 'T')
+                        {
+                            drNew["QUESTIONS_DESC"] += strLine;
+                        }
+                        else if (ctype == 'A')
+                        {
+                            drNew["OPTION_A"] += GetFormatString(strLine);
+                        }
+                        else if (ctype == 'B')
+                        {
+                            drNew["OPTION_B"] += GetFormatString(strLine);
+                        }
+                        else if (ctype == 'C')
+                        {
+                            drNew["OPTION_C"] += GetFormatString(strLine);
+                        }
+                        else if (ctype == 'D')
+                        {
+                            drNew["OPTION_D"] += GetFormatString(strLine);
+                        }
+                        else if (ctype == 'E')
+                        {
+                            drNew["OPTION_E"] += GetFormatString(strLine);
+                        }
                     }
-                    if (oprg.IsMatch(strLine))
-                    {
-                        ctype = strLine.Substring(0, 1).ToUpper().ToCharArray()[0];
-                    }
-                    if (ctype == 'T')
-                    {
-                        drNew["QUESTIONS_DESC"] += strLine;
-                    }
-                    else if (ctype == 'A')
-                    {
-                        drNew["OPTION_A"] += GetFormatString(strLine);
-                    }
-                    else if (ctype == 'B')
-                    {
-                        drNew["OPTION_B"] += GetFormatString(strLine);
-                    }
-                    else if (ctype == 'C')
-                    {
-                        drNew["OPTION_C"] += GetFormatString(strLine);
-                    }
-                    else if (ctype == 'D')
-                    {
-                        drNew["OPTION_D"] += GetFormatString(strLine);
-                    }
+                }
+                catch (Exception err)
+                {
+                    MessageBox.Show(err.Message);
+                }
+                finally
+                {
+                    sr.Close();
+                    sr.Dispose();
                 }
                 if (drNew != null)
                 {
@@ -444,8 +473,6 @@ namespace SySoft
                 //this.dataGridView1.DataSource = dtQuestion;
 
                 this.tpBar.Value = 100;
-                sr.Close();
-                sr.Dispose();
             }
         }
 
@@ -461,46 +488,58 @@ namespace SySoft
 
             int i = 0;
             DataRow[] drs = null;
-            while ((strLine = sr.ReadLine()) != null)
+            try
             {
-                strLine = strLine.Replace("　", "").Replace("\t", "").ToUpper().Trim();
-
-                if (opother.IsMatch(strLine)) { continue; }
-
-                if (opsl.IsMatch(strLine)) { continue; }
-
-                if (string.IsNullOrEmpty(strLine))
-                    continue;
-
-                if (tirg.IsMatch(strLine))
+                while ((strLine = sr.ReadLine()) != null)
                 {
-                    string strSeqNum = strLine.Substring(0, strLine.IndexOf("."));
-                    drs = dtQuestion.Select("Q_SEQ_NUM = '" + strSeqNum + "'");
-                    if (drs.Length > 0)
+                    strLine = strLine.Replace("　", "").Replace("\t", "").ToUpper().Trim();
+
+                    if (opother.IsMatch(strLine)) { continue; }
+
+                    if (opsl.IsMatch(strLine)) { continue; }
+
+                    if (string.IsNullOrEmpty(strLine))
+                        continue;
+
+                    if (tirg.IsMatch(strLine))
                     {
-                        int iStart = strLine.IndexOf("】") + 1;
-                        int iEnd = strLine.IndexOf("。");
-                        drs[0]["ANSWER"] = strLine.Substring(iStart, iEnd - iStart).Trim();
-                        int iAnsi = strLine.IndexOf("解析：");
-                        if (iAnsi > 0)
+                        string strSeqNum = strLine.Substring(0, strLine.IndexOf("."));
+                        drs = dtQuestion.Select("Q_SEQ_NUM = '" + strSeqNum + "'");
+                        if (drs.Length > 0)
                         {
-                            drs[0]["ANALYSIS"] = strLine.Substring(iAnsi);
+                            int iStart = strLine.IndexOf("】") + 1;
+                            int iEnd = strLine.IndexOf("。");
+                            drs[0]["ANSWER"] = strLine.Substring(iStart, iEnd - iStart).Trim();
+                            int iAnsi = strLine.IndexOf("解析：");
+                            if (iAnsi > 0)
+                            {
+                                drs[0]["ANALYSIS"] = strLine.Substring(iAnsi);
+                            }
+                        }
+                        else
+                        {
+                            drs = null;
                         }
                     }
                     else
                     {
-                        drs = null;
-                    }
-                }
-                else
-                {
 
-                    if (drs != null)
-                    {
-                        //dtQuestion.Rows[i]["ANSWER"] = strLine.Substring(strLine.IndexOf("】"), strLine.IndexOf("。"));
-                        drs[0]["ANALYSIS"] += strLine;
+                        if (drs != null)
+                        {
+                            //dtQuestion.Rows[i]["ANSWER"] = strLine.Substring(strLine.IndexOf("】"), strLine.IndexOf("。"));
+                            drs[0]["ANALYSIS"] += strLine;
+                        }
                     }
                 }
+            }
+            catch (Exception err)
+            {
+                MessageBox.Show(err.Message);
+            }
+            finally
+            {
+                sr.Close();
+                sr.Dispose();
             }
             dtQuestion.AcceptChanges();
         }
@@ -580,7 +619,7 @@ namespace SySoft
         {
             System.Windows.Forms.DataGridView dgv = (System.Windows.Forms.DataGridView)sender;
             int iRow;
-            if (int.TryParse(dgv.CurrentRow.Cells[9].Value.ToString(), out iRow))
+            if (int.TryParse(dgv.CurrentRow.Cells[10].Value.ToString(), out iRow))
             {
                 int iCurrent = iRow + 5;
                 if (iCurrent > this.listBox1.Items.Count)
@@ -624,14 +663,14 @@ namespace SySoft
 	                    ,'0' as QUESTIONS_PROPERTY_CID
 	                    ,'" + this.dataGridView1.Rows[i].Cells[2].Value.ToString().Replace("'", "''") + @"' as QUESTIONS_TYPE_CID
 	                    ,'" + this.dataGridView1.Rows[i].Cells[1].Value.ToString().Replace("'", "''") + @"' as QUESTIONS_DESC
-	                    ,'" + this.dataGridView1.Rows[i].Cells[8].Value.ToString().Replace("'", "''") + @"' as ANSWER_HINT_DESC
+	                    ,'" + this.dataGridView1.Rows[i].Cells[9].Value.ToString().Replace("'", "''") + @"' as ANSWER_HINT_DESC
 	                    ,'" + this.dataGridView1.Rows[i].Cells[3].Value.ToString().Replace("'", "''") + @"' as REQ_ANSWER_DESC1
 	                    ,'" + this.dataGridView1.Rows[i].Cells[4].Value.ToString().Replace("'", "''") + @"' as REQ_ANSWER_DESC2
 	                    ,'" + this.dataGridView1.Rows[i].Cells[5].Value.ToString().Replace("'", "''") + @"' as REQ_ANSWER_DESC3
 	                    ,'" + this.dataGridView1.Rows[i].Cells[6].Value.ToString().Replace("'", "''") + @"' as REQ_ANSWER_DESC4
-	                    ,null as REQ_ANSWER_DESC5
+	                    ,'" + this.dataGridView1.Rows[i].Cells[7].Value.ToString().Replace("'", "''") + @"' as REQ_ANSWER_DESC5
 	                    ,null as REQ_ANSWER_DESC6
-	                    ,'" + this.dataGridView1.Rows[i].Cells[7].Value.ToString().Replace("'", "''") + @"' as ANSWER_IDENTIFY_DESC
+	                    ,'" + this.dataGridView1.Rows[i].Cells[8].Value.ToString().Replace("'", "''") + @"' as ANSWER_IDENTIFY_DESC
 	                    ,null as DIFFICULTY_TYPE_CID
 	                    ,0 as QUESTIONS_STATUS_SID
 	                    ,null as CALC_TYPE_CID
@@ -645,7 +684,7 @@ namespace SySoft
                     {
                         strSql += @"INSERT INTO LSS_EXAM_QUESTIONS_KEY SELECT NEWID() AS QUESTIONS_KEY_ID
 ,'" + strId + @"' as QUESTIONS_ID
-,'" + this.dplKey.SelectedText + @"'as EXAM_CONTENT
+,'" + this.dplKey.Text + @"'as EXAM_CONTENT
 ,'" + this.txtYear.Text + @"' as EXAM_YEAR,'cx' as INITIAL_USR,GETDATE() as INITIAL_DT,'cx' as REC_UPDATE_USR,GETDATE() as REC_UPDATE_DT;";
                     }
                     com.CommandText = strSql;
@@ -665,6 +704,7 @@ namespace SySoft
             {
                 con.Close();//关闭数据库
                 this.btnUpdate.Enabled = true;
+                this.txtBatchNo.Text = DateTime.Now.ToString("yyyyMMddmmss");
             }
         }
 
@@ -946,6 +986,15 @@ namespace SySoft
                 cstatus = '0';
                 this.tpBar.Value = 100;
             }
+        }
+
+        private void PaperHandler_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            if (con.State == ConnectionState.Open)
+            {
+                con.Close();
+            }
+            con.Dispose();
         }
     }
 }
