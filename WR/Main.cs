@@ -332,6 +332,7 @@ namespace SySoft
                 this.listBox1.Items.Clear();
                 StreamReader sr = new StreamReader(strFile, Encoding.Default);
                 string strLine = "";
+                string strTitle = "";
                 string strCurrentType = "3";
                 bool answerStart = false;
 
@@ -370,6 +371,9 @@ namespace SySoft
                         this.listBox1.Items.Add(strLine);
                         if (string.IsNullOrEmpty(strLine))
                             continue;
+                        if (string.IsNullOrEmpty(strTitle)) {
+                            strTitle = strLine;
+                        }
                         if (typerg1.IsMatch(strLine))
                         {
                             strCurrentType = "3";
@@ -452,7 +456,8 @@ namespace SySoft
                                 try
                                 {
                                     int idx = strLine.IndexOf(".");
-                                    if (idx < 0) {
+                                    if (idx < 0)
+                                    {
                                         idx = strLine.IndexOf("．");
                                     }
                                     string strSeqNum = strLine.Substring(0, idx);
@@ -463,7 +468,8 @@ namespace SySoft
                                         int iEnd = strLine.IndexOf("。");
                                         drs[0]["ANSWER"] = strLine.Substring(iStart, iEnd - iStart).Trim();
                                         int iAnsi = strLine.IndexOf("解析：");
-                                        if (iAnsi < 0) {
+                                        if (iAnsi < 0)
+                                        {
                                             iAnsi = strLine.IndexOf("解析:");
                                         }
                                         if (iAnsi > 0)
@@ -503,6 +509,9 @@ namespace SySoft
                     sr.Dispose();
                 }
                 dtQuestion.AcceptChanges();
+
+                this.txtQUESTIONS_CNT.Text = dtQuestion.Rows.Count.ToString();
+                this.txtREAL_BATCH_NME.Text = strTitle;
                 //this.dataGridView1.DataSource = dtQuestion;
 
                 this.tpBar.Value = 100;
@@ -1207,6 +1216,173 @@ namespace SySoft
                 con.Close();
             }
             con.Dispose();
+        }
+
+        private void btnFinder_Click(object sender, EventArgs e)
+        {
+            this.btnFinder.Enabled = false;
+            try
+            {
+                this.tpBar.Value = 0;
+                con.Open();
+                SqlCommand com = new SqlCommand();
+                com.Connection = con;
+                com.CommandType = CommandType.Text;
+                string strSql = "SELECT * FROM LSS_EXAM_REAL_BATCH";
+                com.CommandText = strSql;
+
+                DataTable dt = new DataTable();
+                SqlDataAdapter ad = new SqlDataAdapter(com);
+                ad.Fill(dt);
+
+                this.tpBar.Value = 50;
+                this.dataGridView3.DataSource = dt;
+
+                //dr.Close();
+            }
+            catch (Exception err)
+            {
+                MessageBox.Show(err.Message);
+            }
+            finally
+            {
+                con.Close();//关闭数据库
+                this.tpBar.Value = 100;
+                this.btnFinder.Enabled = true;
+            }
+        }
+
+        /// <summary>
+        /// 添加真题批次
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnAdd_Click(object sender, EventArgs e)
+        {
+            if (this.dataGridView1.Rows.Count <= 0)
+            {
+                MessageBox.Show("无数据更新！");
+                return;
+            }
+            this.btnAdd.Enabled = false;
+            try
+            {
+                con.Open();
+                SqlCommand com = new SqlCommand();
+                com.Connection = con;
+                com.CommandType = CommandType.Text;
+
+                CMemIdGenerator cm = new CMemIdGenerator();
+                cm.IDPrefix = "RID";
+                string strId = cm.NewID();
+                string strSql = @"insert into LSS_EXAM_REAL_BATCH SELECT 
+	                    '" + strId + @"' AS REAL_BATCH_ID
+	                    ,'" + this.txtREAL_BATCH_NME.Text + @"' AS REAL_BATCH_NME
+	                    ,'" + this.txtIN_YEAR.Text + @"' AS IN_YEAR
+	                    ,'" + this.txtPARTY_TYPE.Text + @"' AS PARTY_TYPE
+	                    ,'" + this.txtPLACE_CDE.Text + @"' AS PLACE_CDE
+	                    ,'" + this.txtSTATION_CDE.Text + @"' AS STATION_CDE
+	                    ,'" + this.txtTTL_SCORE.Text + @"' AS TTL_SCORE
+	                    ,'" + this.txtQUESTIONS_CNT.Text + @"' AS QUESTIONS_CNT
+	                    ,'" + this.txtEXAM_TIME.Text + @"' AS EXAM_TIME
+	                    ,'cx' as INITIAL_USR
+	                    ,GETDATE() as INITIAL_DT
+	                    ,'cx' as REC_UPDATE_USR
+	                    ,GETDATE() as REC_UPDATE_DT;";
+                com.CommandText = strSql;
+                SqlDataReader dr = com.ExecuteReader();//执行SQL语句
+                dr.Close();//关闭执行
+
+                double dCrease = this.dataGridView1.Rows.Count / 100.00, dAcount = 0.0;
+                for (int i = 0; i < this.dataGridView1.Rows.Count; i++)
+                {
+                    string strQId = cm.NewID();
+                    strSql = @"insert into LSS_EXAM_QUESTIONS SELECT 
+	                    '" + strQId + @"' AS QUESTIONS_ID
+	                    ,'" + strId + @"' AS REAL_BATCH_ID
+	                    ,'' AS RELATION_ID
+	                    ,NULL AS QUESTIONS_NO
+	                    ,'" + this.dataGridView1.Rows[i].Cells[0].Value.ToString().Replace("'", "''") + @"' as SEQ_NUM
+	                    ,'0' as QUESTIONS_PROPERTY_CID
+	                    ,'" + this.dataGridView1.Rows[i].Cells[2].Value.ToString().Replace("'", "''") + @"' as QUESTIONS_TYPE_CID
+	                    ,'" + this.dataGridView1.Rows[i].Cells[1].Value.ToString().Replace("'", "''") + @"' as QUESTIONS_DESC
+	                    ,'" + this.dataGridView1.Rows[i].Cells[9].Value.ToString().Replace("'", "''") + @"' as ANSWER_HINT_DESC
+	                    ,'" + this.dataGridView1.Rows[i].Cells[3].Value.ToString().Replace("'", "''") + @"' as REQ_ANSWER_DESC1
+	                    ,'" + this.dataGridView1.Rows[i].Cells[4].Value.ToString().Replace("'", "''") + @"' as REQ_ANSWER_DESC2
+	                    ,'" + this.dataGridView1.Rows[i].Cells[5].Value.ToString().Replace("'", "''") + @"' as REQ_ANSWER_DESC3
+	                    ,'" + this.dataGridView1.Rows[i].Cells[6].Value.ToString().Replace("'", "''") + @"' as REQ_ANSWER_DESC4
+	                    ,'" + this.dataGridView1.Rows[i].Cells[7].Value.ToString().Replace("'", "''") + @"' as REQ_ANSWER_DESC5
+	                    ,null as REQ_ANSWER_DESC6
+	                    ,'" + this.dataGridView1.Rows[i].Cells[8].Value.ToString().Replace("'", "''") + @"' as ANSWER_IDENTIFY_DESC
+	                    ,null as DIFFICULTY_TYPE_CID
+	                    ,0 as QUESTIONS_STATUS_SID
+	                    ,null as CALC_TYPE_CID
+	                    ,2 as CALC_SCORE
+	                    ,null as NEED_SECOND
+	                    ,'cx' as INITIAL_USR
+	                    ,GETDATE() as INITIAL_DT
+	                    ,'cx' as REC_UPDATE_USR
+	                    ,GETDATE() as REC_UPDATE_DT;";
+
+                        strSql += @"INSERT INTO LSS_EXAM_QUESTIONS_KEY SELECT NEWID() AS QUESTIONS_KEY_ID
+,'" + strQId + @"' as QUESTIONS_ID
+,'真题-" + this.txtPARTY_TYPE.Text + @"'as EXAM_CONTENT
+,'" + this.txtIN_YEAR.Text + @"' as EXAM_YEAR,'cx' as INITIAL_USR,GETDATE() as INITIAL_DT,'cx' as REC_UPDATE_USR,GETDATE() as REC_UPDATE_DT;";
+
+                    com.CommandText = strSql;
+                    SqlDataReader dr2 = com.ExecuteReader();//执行SQL语句
+                    dr2.Close();//关闭执行
+                    dAcount += dCrease;
+                    this.tpBar.Value = (int)dAcount > 100 ? 100 : (int)dAcount;
+                }
+
+                this.tpBar.Value = 100;
+                MessageBox.Show("导入完成");
+            }
+            catch (Exception err)
+            {
+                MessageBox.Show(err.Message);
+            }
+            finally
+            {
+                con.Close();//关闭数据库
+                this.btnAdd.Enabled = true;
+                this.txtREAL_BATCH_NME.Text = "";
+            }
+        }
+
+        private void dataGridView3_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            System.Windows.Forms.DataGridView dgv = (System.Windows.Forms.DataGridView)sender;
+            string strREAL_BATCH_ID = dgv.CurrentRow.Cells[0].Value.ToString();
+            try
+            {
+                this.tpBar.Value = 0;
+                con.Open();
+                SqlCommand com = new SqlCommand();
+                com.Connection = con;
+                com.CommandType = CommandType.Text;
+                string strSql = "SELECT * FROM LSS_EXAM_QUESTIONS WHERE REAL_BATCH_ID='" + strREAL_BATCH_ID + "'";
+                com.CommandText = strSql;
+
+                DataTable dt = new DataTable();
+                SqlDataAdapter ad = new SqlDataAdapter(com);
+                ad.Fill(dt);
+
+                this.tpBar.Value = 50;
+                this.dataGridView4.DataSource = dt;
+
+                //dr.Close();
+            }
+            catch (Exception err)
+            {
+                MessageBox.Show(err.Message);
+            }
+            finally
+            {
+                con.Close();//关闭数据库
+                this.tpBar.Value = 100;
+            }
         }
 
     }
