@@ -28,7 +28,7 @@ namespace SySoft
         private void Form1_Load(object sender, EventArgs e)
         {
             con = new SqlConnection();
-            con.ConnectionString = "server=;database=;uid=sa;pwd=";
+            con.ConnectionString = "server=;database=;uid=;pwd=";
             this.txtFilePath.Text = "请选择导入文件！";
             this.txtYear.Text = DateTime.Now.Year.ToString();
             this.txtBatchNo.Text = DateTime.Now.ToString("yyyyMMddmmss");
@@ -320,6 +320,195 @@ namespace SySoft
             }
         }
 
+        /// <summary>
+        /// 真题
+        /// </summary>
+        /// <param name="strFilePath"></param>
+        private void ReadTextC(string strFilePath)
+        {
+            string strFile = strFilePath.ToUpper();
+            if (strFile.EndsWith(".TXT"))
+            {
+                this.listBox1.Items.Clear();
+                StreamReader sr = new StreamReader(strFile, Encoding.Default);
+                string strLine = "";
+                string strCurrentType = "3";
+                bool answerStart = false;
+
+                DataTable dtQuestion = new DataTable();
+                dtQuestion.Columns.Add(new DataColumn("SEQ_NUM", Type.GetType("System.Int32")));
+                dtQuestion.Columns.Add(new DataColumn("QUESTIONS_DESC", Type.GetType("System.String")));
+                dtQuestion.Columns.Add(new DataColumn("QUESTIONS_TYPE", Type.GetType("System.String")));
+                dtQuestion.Columns.Add(new DataColumn("OPTION_A", Type.GetType("System.String")));
+                dtQuestion.Columns.Add(new DataColumn("OPTION_B", Type.GetType("System.String")));
+                dtQuestion.Columns.Add(new DataColumn("OPTION_C", Type.GetType("System.String")));
+                dtQuestion.Columns.Add(new DataColumn("OPTION_D", Type.GetType("System.String")));
+                dtQuestion.Columns.Add(new DataColumn("OPTION_E", Type.GetType("System.String")));
+                dtQuestion.Columns.Add(new DataColumn("ANSWER", Type.GetType("System.String")));
+                dtQuestion.Columns.Add(new DataColumn("ANALYSIS", Type.GetType("System.String")));
+                dtQuestion.Columns.Add(new DataColumn("ROWS", Type.GetType("System.Int32")));
+                dtQuestion.Columns.Add(new DataColumn("Q_SEQ_NUM", Type.GetType("System.String")));
+                this.dataGridView1.DataSource = dtQuestion;
+                DataRow drNew = dtQuestion.NewRow();
+                int i = 0, j = 0;
+                this.tpBar.Value = 0;
+                try
+                {
+                    char ctype = ' ';
+                    Regex tirg = new Regex(@"^\d+[\.．]");
+                    Regex oprg = new Regex(@"^[A-E]{1}[\.．]{1}");
+                    Regex typerg1 = new Regex(@"[、\.]{1}判断");
+                    Regex typerg2 = new Regex(@"[、\.]{1}单项选择");
+                    Regex typerg3 = new Regex(@"[、\.]{1}多项选择");
+                    Regex answerrg = new Regex(@"参考答案");
+                    Regex answernorg = new Regex(@"^\d+.【答案】");
+                    DataRow[] drs = null;
+                    while ((strLine = sr.ReadLine()) != null)
+                    {
+                        strLine = strLine.Replace("　", "").Replace("\t", "").ToUpper().Trim();
+                        i++;
+                        this.listBox1.Items.Add(strLine);
+                        if (string.IsNullOrEmpty(strLine))
+                            continue;
+                        if (typerg1.IsMatch(strLine))
+                        {
+                            strCurrentType = "3";
+                        }
+                        else if (typerg2.IsMatch(strLine))
+                        {
+                            strCurrentType = "0";
+                        }
+                        else if (typerg3.IsMatch(strLine))
+                        {
+                            strCurrentType = "1";
+                        }
+                        else if (answerrg.IsMatch(strLine))
+                        {
+                            answerStart = true;
+
+                            if (drNew != null)
+                            {
+                                dtQuestion.Rows.Add(drNew);
+                            }
+                        }
+                        if (!answerStart)
+                        {
+                            #region 题目读取
+                            if (tirg.IsMatch(strLine))
+                            {
+                                int idx = strLine.IndexOf("．");
+                                if (idx < 0)
+                                {
+                                    idx = strLine.IndexOf(".");
+                                }
+                                string strQSeqNum = strLine.Substring(0, idx);
+                                ctype = 'T';
+                                if (!string.IsNullOrEmpty(drNew["QUESTIONS_DESC"].ToString()))
+                                {
+                                    dtQuestion.Rows.Add(drNew);
+                                    drNew = dtQuestion.NewRow();
+                                }
+                                strLine = strLine.Substring(strQSeqNum.Length + 1).Trim();
+                                drNew["Q_SEQ_NUM"] = strQSeqNum;
+                                drNew["QUESTIONS_TYPE"] = strCurrentType;
+                                drNew["SEQ_NUM"] = ++j;
+                                drNew["ROWS"] = i;
+
+                            }
+                            if (oprg.IsMatch(strLine))
+                            {
+                                ctype = strLine.Substring(0, 1).ToUpper().ToCharArray()[0];
+                            }
+                            if (ctype == 'T')
+                            {
+                                drNew["QUESTIONS_DESC"] += strLine;
+                            }
+                            else if (ctype == 'A')
+                            {
+                                drNew["OPTION_A"] += GetFormatString(strLine);
+                            }
+                            else if (ctype == 'B')
+                            {
+                                drNew["OPTION_B"] += GetFormatString(strLine);
+                            }
+                            else if (ctype == 'C')
+                            {
+                                drNew["OPTION_C"] += GetFormatString(strLine);
+                            }
+                            else if (ctype == 'D')
+                            {
+                                drNew["OPTION_D"] += GetFormatString(strLine);
+                            }
+                            else if (ctype == 'E')
+                            {
+                                drNew["OPTION_E"] += GetFormatString(strLine);
+                            }
+                            #endregion
+                        }
+                        else
+                        {
+                            if (answernorg.IsMatch(strLine))
+                            {
+                                try
+                                {
+                                    int idx = strLine.IndexOf(".");
+                                    if (idx < 0) {
+                                        idx = strLine.IndexOf("．");
+                                    }
+                                    string strSeqNum = strLine.Substring(0, idx);
+                                    drs = dtQuestion.Select("Q_SEQ_NUM = '" + strSeqNum + "'");
+                                    if (drs.Length > 0)
+                                    {
+                                        int iStart = strLine.IndexOf("】") + 1;
+                                        int iEnd = strLine.IndexOf("。");
+                                        drs[0]["ANSWER"] = strLine.Substring(iStart, iEnd - iStart).Trim();
+                                        int iAnsi = strLine.IndexOf("解析：");
+                                        if (iAnsi < 0) {
+                                            iAnsi = strLine.IndexOf("解析:");
+                                        }
+                                        if (iAnsi > 0)
+                                        {
+                                            drs[0]["ANALYSIS"] = strLine.Substring(iAnsi).Replace("解析：", "").Replace("解析:", "").Trim();
+                                        }
+                                    }
+                                    else
+                                    {
+                                        drs = null;
+                                    }
+                                }
+                                catch (Exception err)
+                                {
+                                    throw new Exception(strLine + err.Message);
+                                }
+                            }
+                            else
+                            {
+
+                                if (drs != null)
+                                {
+                                    //dtQuestion.Rows[i]["ANSWER"] = strLine.Substring(strLine.IndexOf("】"), strLine.IndexOf("。"));
+                                    drs[0]["ANALYSIS"] += strLine;
+                                }
+                            }
+                        }
+                    }
+                }
+                catch (Exception err)
+                {
+                    MessageBox.Show(err.Message);
+                }
+                finally
+                {
+                    sr.Close();
+                    sr.Dispose();
+                }
+                dtQuestion.AcceptChanges();
+                //this.dataGridView1.DataSource = dtQuestion;
+
+                this.tpBar.Value = 100;
+            }
+        }
+
         private void preProcess(string strFilePath)
         {
             //string[] pathFile = Directory.GetFiles(path);
@@ -346,6 +535,10 @@ namespace SySoft
             //MessageBox.Show("转换完成");
         }
 
+        /// <summary>
+        /// 题目、答案分开
+        /// </summary>
+        /// <param name="strFilePath"></param>
         private void ReadTextB(string strFilePath)
         {
             preProcess(strFilePath);
@@ -728,6 +921,7 @@ namespace SySoft
             formatType = 'A';
             this.格式1ToolStripMenuItem.Image = SySoft.Properties.Resources.forwardarr;
             this.格式2ToolStripMenuItem.Image = null;
+            this.真题ToolStripMenuItem.Image = null;
             ReadTextA(this.txtFilePath.Text.ToUpper());
         }
 
@@ -735,8 +929,18 @@ namespace SySoft
         {
             formatType = 'B';
             this.格式1ToolStripMenuItem.Image = null;
+            this.真题ToolStripMenuItem.Image = null;
             this.格式2ToolStripMenuItem.Image = SySoft.Properties.Resources.forwardarr;
             ReadTextB(this.txtFilePath.Text.ToUpper());
+        }
+
+        private void 真题ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            formatType = 'C';
+            this.格式1ToolStripMenuItem.Image = null;
+            this.格式2ToolStripMenuItem.Image = null;
+            this.真题ToolStripMenuItem.Image = SySoft.Properties.Resources.forwardarr;
+            ReadTextC(this.txtFilePath.Text.ToUpper());
         }
 
         private void 打开ToolStripMenuItem_Click(object sender, EventArgs e)
@@ -759,6 +963,10 @@ namespace SySoft
                 else if (formatType == 'B')
                 {
                     ReadTextB(strFile);
+                }
+                else if (formatType == 'C')
+                {
+                    ReadTextC(strFile);
                 }
             }
         }
@@ -793,6 +1001,10 @@ namespace SySoft
                 else if (formatType == 'B')
                 {
                     ReadTextB(strFile);
+                }
+                else if (formatType == 'C')
+                {
+                    ReadTextC(strFile);
                 }
             }
         }
@@ -996,5 +1208,6 @@ namespace SySoft
             }
             con.Dispose();
         }
+
     }
 }

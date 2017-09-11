@@ -32,6 +32,18 @@
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.listBox1 = new System.Windows.Forms.ListBox();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.SEQ_NUM = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Q_SEQ_NUM = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.QUESTIONS_DESC = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.QUESTIONS_TYPE = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.OPTION_A = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.OPTION_B = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.OPTION_C = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.OPTION_D = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.OPTION_E = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ANSWER = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ANALYSIS = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ROWS = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.ckbOptionHead = new System.Windows.Forms.CheckBox();
@@ -47,6 +59,7 @@
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.格式1ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.格式2ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.真题ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.导入答案ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.导出ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -69,18 +82,24 @@
             this.label3 = new System.Windows.Forms.Label();
             this.txtYear = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.SEQ_NUM = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Q_SEQ_NUM = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.QUESTIONS_DESC = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.QUESTIONS_TYPE = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.OPTION_A = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.OPTION_B = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.OPTION_C = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.OPTION_D = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.OPTION_E = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ANSWER = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ANALYSIS = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ROWS = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
+            this.label10 = new System.Windows.Forms.Label();
+            this.label11 = new System.Windows.Forms.Label();
+            this.label12 = new System.Windows.Forms.Label();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.textBox3 = new System.Windows.Forms.TextBox();
+            this.textBox4 = new System.Windows.Forms.TextBox();
+            this.textBox5 = new System.Windows.Forms.TextBox();
+            this.textBox6 = new System.Windows.Forms.TextBox();
+            this.textBox7 = new System.Windows.Forms.TextBox();
+            this.textBox8 = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -101,6 +120,8 @@
             this.groupBox3.SuspendLayout();
             this.panel2.SuspendLayout();
             this.groupBox1.SuspendLayout();
+            this.tabPage3.SuspendLayout();
+            this.groupBox4.SuspendLayout();
             this.SuspendLayout();
             // 
             // splitContainer1
@@ -117,7 +138,7 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.dataGridView1);
-            this.splitContainer1.Size = new System.Drawing.Size(803, 364);
+            this.splitContainer1.Size = new System.Drawing.Size(803, 365);
             this.splitContainer1.SplitterDistance = 197;
             this.splitContainer1.TabIndex = 4;
             // 
@@ -131,7 +152,7 @@
             this.listBox1.Location = new System.Drawing.Point(0, 0);
             this.listBox1.Margin = new System.Windows.Forms.Padding(0);
             this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(197, 364);
+            this.listBox1.Size = new System.Drawing.Size(197, 365);
             this.listBox1.TabIndex = 4;
             // 
             // dataGridView1
@@ -157,9 +178,91 @@
             this.dataGridView1.Margin = new System.Windows.Forms.Padding(0);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowTemplate.Height = 23;
-            this.dataGridView1.Size = new System.Drawing.Size(602, 364);
+            this.dataGridView1.Size = new System.Drawing.Size(602, 365);
             this.dataGridView1.TabIndex = 0;
             this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
+            // 
+            // SEQ_NUM
+            // 
+            this.SEQ_NUM.DataPropertyName = "SEQ_NUM";
+            this.SEQ_NUM.HeaderText = "序号";
+            this.SEQ_NUM.Name = "SEQ_NUM";
+            this.SEQ_NUM.Width = 40;
+            // 
+            // Q_SEQ_NUM
+            // 
+            this.Q_SEQ_NUM.DataPropertyName = "Q_SEQ_NUM";
+            this.Q_SEQ_NUM.HeaderText = "行号";
+            this.Q_SEQ_NUM.Name = "Q_SEQ_NUM";
+            this.Q_SEQ_NUM.Width = 40;
+            // 
+            // QUESTIONS_DESC
+            // 
+            this.QUESTIONS_DESC.DataPropertyName = "QUESTIONS_DESC";
+            this.QUESTIONS_DESC.HeaderText = "题目";
+            this.QUESTIONS_DESC.Name = "QUESTIONS_DESC";
+            this.QUESTIONS_DESC.Width = 300;
+            // 
+            // QUESTIONS_TYPE
+            // 
+            this.QUESTIONS_TYPE.DataPropertyName = "QUESTIONS_TYPE";
+            this.QUESTIONS_TYPE.HeaderText = "类型";
+            this.QUESTIONS_TYPE.Name = "QUESTIONS_TYPE";
+            this.QUESTIONS_TYPE.Width = 70;
+            // 
+            // OPTION_A
+            // 
+            this.OPTION_A.DataPropertyName = "OPTION_A";
+            this.OPTION_A.HeaderText = "A";
+            this.OPTION_A.Name = "OPTION_A";
+            this.OPTION_A.Width = 120;
+            // 
+            // OPTION_B
+            // 
+            this.OPTION_B.DataPropertyName = "OPTION_B";
+            this.OPTION_B.HeaderText = "B";
+            this.OPTION_B.Name = "OPTION_B";
+            this.OPTION_B.Width = 120;
+            // 
+            // OPTION_C
+            // 
+            this.OPTION_C.DataPropertyName = "OPTION_C";
+            this.OPTION_C.HeaderText = "C";
+            this.OPTION_C.Name = "OPTION_C";
+            this.OPTION_C.Width = 120;
+            // 
+            // OPTION_D
+            // 
+            this.OPTION_D.DataPropertyName = "OPTION_D";
+            this.OPTION_D.HeaderText = "D";
+            this.OPTION_D.Name = "OPTION_D";
+            this.OPTION_D.Width = 120;
+            // 
+            // OPTION_E
+            // 
+            this.OPTION_E.DataPropertyName = "OPTION_E";
+            this.OPTION_E.HeaderText = "E";
+            this.OPTION_E.Name = "OPTION_E";
+            // 
+            // ANSWER
+            // 
+            this.ANSWER.DataPropertyName = "ANSWER";
+            this.ANSWER.HeaderText = "答案";
+            this.ANSWER.Name = "ANSWER";
+            this.ANSWER.Width = 40;
+            // 
+            // ANALYSIS
+            // 
+            this.ANALYSIS.DataPropertyName = "ANALYSIS";
+            this.ANALYSIS.HeaderText = "解析";
+            this.ANALYSIS.Name = "ANALYSIS";
+            this.ANALYSIS.Width = 120;
+            // 
+            // ROWS
+            // 
+            this.ROWS.DataPropertyName = "ROWS";
+            this.ROWS.HeaderText = "文本行";
+            this.ROWS.Name = "ROWS";
             // 
             // splitContainer2
             // 
@@ -179,7 +282,7 @@
             // splitContainer2.Panel2
             // 
             this.splitContainer2.Panel2.Controls.Add(this.splitContainer1);
-            this.splitContainer2.Size = new System.Drawing.Size(803, 418);
+            this.splitContainer2.Size = new System.Drawing.Size(803, 419);
             this.splitContainer2.TabIndex = 5;
             // 
             // groupBox2
@@ -249,7 +352,7 @@
             this.导出ToolStripMenuItem});
             this.MU_READ_FORMAT.Location = new System.Drawing.Point(0, 0);
             this.MU_READ_FORMAT.Name = "MU_READ_FORMAT";
-            this.MU_READ_FORMAT.Size = new System.Drawing.Size(811, 25);
+            this.MU_READ_FORMAT.Size = new System.Drawing.Size(811, 24);
             this.MU_READ_FORMAT.TabIndex = 9;
             this.MU_READ_FORMAT.Text = "读取格式";
             // 
@@ -259,20 +362,20 @@
             this.打开ToolStripMenuItem,
             this.修改ToolStripMenuItem});
             this.文件ToolStripMenuItem.Name = "文件ToolStripMenuItem";
-            this.文件ToolStripMenuItem.Size = new System.Drawing.Size(44, 21);
+            this.文件ToolStripMenuItem.Size = new System.Drawing.Size(41, 20);
             this.文件ToolStripMenuItem.Text = "文件";
             // 
             // 打开ToolStripMenuItem
             // 
             this.打开ToolStripMenuItem.Name = "打开ToolStripMenuItem";
-            this.打开ToolStripMenuItem.Size = new System.Drawing.Size(109, 22);
+            this.打开ToolStripMenuItem.Size = new System.Drawing.Size(112, 22);
             this.打开ToolStripMenuItem.Text = "打开...";
             this.打开ToolStripMenuItem.Click += new System.EventHandler(this.打开ToolStripMenuItem_Click);
             // 
             // 修改ToolStripMenuItem
             // 
             this.修改ToolStripMenuItem.Name = "修改ToolStripMenuItem";
-            this.修改ToolStripMenuItem.Size = new System.Drawing.Size(109, 22);
+            this.修改ToolStripMenuItem.Size = new System.Drawing.Size(112, 22);
             this.修改ToolStripMenuItem.Text = "修改";
             this.修改ToolStripMenuItem.Click += new System.EventHandler(this.修改ToolStripMenuItem_Click);
             // 
@@ -282,16 +385,17 @@
             this.toolStripMenuItem1,
             this.格式1ToolStripMenuItem,
             this.格式2ToolStripMenuItem,
+            this.真题ToolStripMenuItem,
             this.toolStripSeparator1,
             this.导入答案ToolStripMenuItem});
             this.读取ToolStripMenuItem.Name = "读取ToolStripMenuItem";
-            this.读取ToolStripMenuItem.Size = new System.Drawing.Size(44, 21);
+            this.读取ToolStripMenuItem.Size = new System.Drawing.Size(41, 20);
             this.读取ToolStripMenuItem.Text = "读取";
             // 
             // toolStripMenuItem1
             // 
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(124, 22);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(118, 22);
             this.toolStripMenuItem1.Text = "重新读取";
             this.toolStripMenuItem1.Click += new System.EventHandler(this.toolStripMenuItem1_Click);
             // 
@@ -299,26 +403,33 @@
             // 
             this.格式1ToolStripMenuItem.Image = global::SySoft.Properties.Resources.forwardarr;
             this.格式1ToolStripMenuItem.Name = "格式1ToolStripMenuItem";
-            this.格式1ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
+            this.格式1ToolStripMenuItem.Size = new System.Drawing.Size(118, 22);
             this.格式1ToolStripMenuItem.Text = "格式1";
             this.格式1ToolStripMenuItem.Click += new System.EventHandler(this.格式1ToolStripMenuItem_Click);
             // 
             // 格式2ToolStripMenuItem
             // 
             this.格式2ToolStripMenuItem.Name = "格式2ToolStripMenuItem";
-            this.格式2ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
+            this.格式2ToolStripMenuItem.Size = new System.Drawing.Size(118, 22);
             this.格式2ToolStripMenuItem.Text = "格式2";
             this.格式2ToolStripMenuItem.Click += new System.EventHandler(this.格式2ToolStripMenuItem_Click);
+            // 
+            // 真题ToolStripMenuItem
+            // 
+            this.真题ToolStripMenuItem.Name = "真题ToolStripMenuItem";
+            this.真题ToolStripMenuItem.Size = new System.Drawing.Size(118, 22);
+            this.真题ToolStripMenuItem.Text = "真题";
+            this.真题ToolStripMenuItem.Click += new System.EventHandler(this.真题ToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(121, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(115, 6);
             // 
             // 导入答案ToolStripMenuItem
             // 
             this.导入答案ToolStripMenuItem.Name = "导入答案ToolStripMenuItem";
-            this.导入答案ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
+            this.导入答案ToolStripMenuItem.Size = new System.Drawing.Size(118, 22);
             this.导入答案ToolStripMenuItem.Text = "答案...";
             this.导入答案ToolStripMenuItem.Click += new System.EventHandler(this.导入答案ToolStripMenuItem_Click);
             // 
@@ -327,13 +438,13 @@
             this.导出ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.eXCELToolStripMenuItem});
             this.导出ToolStripMenuItem.Name = "导出ToolStripMenuItem";
-            this.导出ToolStripMenuItem.Size = new System.Drawing.Size(44, 21);
+            this.导出ToolStripMenuItem.Size = new System.Drawing.Size(41, 20);
             this.导出ToolStripMenuItem.Text = "导出";
             // 
             // eXCELToolStripMenuItem
             // 
             this.eXCELToolStripMenuItem.Name = "eXCELToolStripMenuItem";
-            this.eXCELToolStripMenuItem.Size = new System.Drawing.Size(112, 22);
+            this.eXCELToolStripMenuItem.Size = new System.Drawing.Size(100, 22);
             this.eXCELToolStripMenuItem.Text = "EXCEL";
             this.eXCELToolStripMenuItem.Click += new System.EventHandler(this.eXCELToolStripMenuItem_Click);
             // 
@@ -341,11 +452,12 @@
             // 
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage2);
+            this.tabControl1.Controls.Add(this.tabPage3);
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tabControl1.Location = new System.Drawing.Point(0, 25);
+            this.tabControl1.Location = new System.Drawing.Point(0, 24);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(811, 444);
+            this.tabControl1.Size = new System.Drawing.Size(811, 445);
             this.tabControl1.TabIndex = 10;
             // 
             // tabPage1
@@ -354,7 +466,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Margin = new System.Windows.Forms.Padding(0);
             this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Size = new System.Drawing.Size(803, 418);
+            this.tabPage1.Size = new System.Drawing.Size(803, 419);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "读取";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -366,9 +478,9 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(803, 418);
+            this.tabPage2.Size = new System.Drawing.Size(803, 419);
             this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "更新";
+            this.tabPage2.Text = "批量更新";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
             // dataGridView2
@@ -381,7 +493,7 @@
             this.dataGridView2.Name = "dataGridView2";
             this.dataGridView2.ReadOnly = true;
             this.dataGridView2.RowTemplate.Height = 23;
-            this.dataGridView2.Size = new System.Drawing.Size(588, 412);
+            this.dataGridView2.Size = new System.Drawing.Size(588, 413);
             this.dataGridView2.TabIndex = 11;
             // 
             // panel1
@@ -391,7 +503,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Left;
             this.panel1.Location = new System.Drawing.Point(3, 3);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(209, 412);
+            this.panel1.Size = new System.Drawing.Size(209, 413);
             this.panel1.TabIndex = 10;
             // 
             // groupBox3
@@ -402,7 +514,7 @@
             this.groupBox3.Location = new System.Drawing.Point(0, 142);
             this.groupBox3.Margin = new System.Windows.Forms.Padding(10, 3, 3, 3);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(209, 270);
+            this.groupBox3.Size = new System.Drawing.Size(209, 271);
             this.groupBox3.TabIndex = 9;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "删除数据";
@@ -414,7 +526,7 @@
             this.libBatch.ItemHeight = 12;
             this.libBatch.Location = new System.Drawing.Point(3, 17);
             this.libBatch.Name = "libBatch";
-            this.libBatch.Size = new System.Drawing.Size(203, 214);
+            this.libBatch.Size = new System.Drawing.Size(203, 215);
             this.libBatch.TabIndex = 0;
             this.libBatch.DoubleClick += new System.EventHandler(this.libBatch_DoubleClick);
             // 
@@ -423,7 +535,7 @@
             this.panel2.Controls.Add(this.btnGetBatch);
             this.panel2.Controls.Add(this.btnDelete);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel2.Location = new System.Drawing.Point(3, 231);
+            this.panel2.Location = new System.Drawing.Point(3, 232);
             this.panel2.MaximumSize = new System.Drawing.Size(259, 36);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(203, 36);
@@ -542,87 +654,169 @@
             this.label2.TabIndex = 1;
             this.label2.Text = "关键字";
             // 
-            // SEQ_NUM
+            // tabPage3
             // 
-            this.SEQ_NUM.DataPropertyName = "SEQ_NUM";
-            this.SEQ_NUM.HeaderText = "序号";
-            this.SEQ_NUM.Name = "SEQ_NUM";
-            this.SEQ_NUM.Width = 40;
+            this.tabPage3.Controls.Add(this.groupBox4);
+            this.tabPage3.Location = new System.Drawing.Point(4, 22);
+            this.tabPage3.Name = "tabPage3";
+            this.tabPage3.Size = new System.Drawing.Size(803, 419);
+            this.tabPage3.TabIndex = 2;
+            this.tabPage3.Text = "真题添加";
+            this.tabPage3.UseVisualStyleBackColor = true;
             // 
-            // Q_SEQ_NUM
+            // groupBox4
             // 
-            this.Q_SEQ_NUM.DataPropertyName = "Q_SEQ_NUM";
-            this.Q_SEQ_NUM.HeaderText = "行号";
-            this.Q_SEQ_NUM.Name = "Q_SEQ_NUM";
-            this.Q_SEQ_NUM.Width = 40;
+            this.groupBox4.Controls.Add(this.textBox8);
+            this.groupBox4.Controls.Add(this.textBox7);
+            this.groupBox4.Controls.Add(this.textBox6);
+            this.groupBox4.Controls.Add(this.textBox5);
+            this.groupBox4.Controls.Add(this.textBox4);
+            this.groupBox4.Controls.Add(this.textBox3);
+            this.groupBox4.Controls.Add(this.textBox2);
+            this.groupBox4.Controls.Add(this.textBox1);
+            this.groupBox4.Controls.Add(this.label12);
+            this.groupBox4.Controls.Add(this.label11);
+            this.groupBox4.Controls.Add(this.label10);
+            this.groupBox4.Controls.Add(this.label9);
+            this.groupBox4.Controls.Add(this.label8);
+            this.groupBox4.Controls.Add(this.label7);
+            this.groupBox4.Controls.Add(this.label6);
+            this.groupBox4.Controls.Add(this.label5);
+            this.groupBox4.Dock = System.Windows.Forms.DockStyle.Top;
+            this.groupBox4.Location = new System.Drawing.Point(0, 0);
+            this.groupBox4.Name = "groupBox4";
+            this.groupBox4.Size = new System.Drawing.Size(803, 108);
+            this.groupBox4.TabIndex = 0;
+            this.groupBox4.TabStop = false;
+            this.groupBox4.Text = "真题批次";
             // 
-            // QUESTIONS_DESC
+            // label5
             // 
-            this.QUESTIONS_DESC.DataPropertyName = "QUESTIONS_DESC";
-            this.QUESTIONS_DESC.HeaderText = "题目";
-            this.QUESTIONS_DESC.Name = "QUESTIONS_DESC";
-            this.QUESTIONS_DESC.Width = 300;
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(9, 21);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(53, 12);
+            this.label5.TabIndex = 0;
+            this.label5.Text = "试题名称";
             // 
-            // QUESTIONS_TYPE
+            // label6
             // 
-            this.QUESTIONS_TYPE.DataPropertyName = "QUESTIONS_TYPE";
-            this.QUESTIONS_TYPE.HeaderText = "类型";
-            this.QUESTIONS_TYPE.Name = "QUESTIONS_TYPE";
-            this.QUESTIONS_TYPE.Width = 70;
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(271, 20);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(29, 12);
+            this.label6.TabIndex = 1;
+            this.label6.Text = "年份";
             // 
-            // OPTION_A
+            // label7
             // 
-            this.OPTION_A.DataPropertyName = "OPTION_A";
-            this.OPTION_A.HeaderText = "A";
-            this.OPTION_A.Name = "OPTION_A";
-            this.OPTION_A.Width = 120;
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(371, 47);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(53, 12);
+            this.label7.TabIndex = 2;
+            this.label7.Text = "考试用时";
             // 
-            // OPTION_B
+            // label8
             // 
-            this.OPTION_B.DataPropertyName = "OPTION_B";
-            this.OPTION_B.HeaderText = "B";
-            this.OPTION_B.Name = "OPTION_B";
-            this.OPTION_B.Width = 120;
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(371, 20);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(53, 12);
+            this.label8.TabIndex = 3;
+            this.label8.Text = "题目数量";
             // 
-            // OPTION_C
+            // label9
             // 
-            this.OPTION_C.DataPropertyName = "OPTION_C";
-            this.OPTION_C.HeaderText = "C";
-            this.OPTION_C.Name = "OPTION_C";
-            this.OPTION_C.Width = 120;
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(33, 47);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(29, 12);
+            this.label9.TabIndex = 4;
+            this.label9.Text = "省市";
             // 
-            // OPTION_D
+            // label10
             // 
-            this.OPTION_D.DataPropertyName = "OPTION_D";
-            this.OPTION_D.HeaderText = "D";
-            this.OPTION_D.Name = "OPTION_D";
-            this.OPTION_D.Width = 120;
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(33, 74);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(29, 12);
+            this.label10.TabIndex = 5;
+            this.label10.Text = "区域";
             // 
-            // OPTION_E
+            // label11
             // 
-            this.OPTION_E.DataPropertyName = "OPTION_E";
-            this.OPTION_E.HeaderText = "E";
-            this.OPTION_E.Name = "OPTION_E";
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(271, 47);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(29, 12);
+            this.label11.TabIndex = 6;
+            this.label11.Text = "总分";
             // 
-            // ANSWER
+            // label12
             // 
-            this.ANSWER.DataPropertyName = "ANSWER";
-            this.ANSWER.HeaderText = "答案";
-            this.ANSWER.Name = "ANSWER";
-            this.ANSWER.Width = 40;
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(271, 74);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(29, 12);
+            this.label12.TabIndex = 7;
+            this.label12.Text = "类型";
             // 
-            // ANALYSIS
+            // textBox1
             // 
-            this.ANALYSIS.DataPropertyName = "ANALYSIS";
-            this.ANALYSIS.HeaderText = "解析";
-            this.ANALYSIS.Name = "ANALYSIS";
-            this.ANALYSIS.Width = 120;
+            this.textBox1.Location = new System.Drawing.Point(68, 17);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(197, 21);
+            this.textBox1.TabIndex = 8;
             // 
-            // ROWS
+            // textBox2
             // 
-            this.ROWS.DataPropertyName = "ROWS";
-            this.ROWS.HeaderText = "文本行";
-            this.ROWS.Name = "ROWS";
+            this.textBox2.Location = new System.Drawing.Point(68, 44);
+            this.textBox2.Name = "textBox2";
+            this.textBox2.Size = new System.Drawing.Size(197, 21);
+            this.textBox2.TabIndex = 9;
+            // 
+            // textBox3
+            // 
+            this.textBox3.Location = new System.Drawing.Point(303, 71);
+            this.textBox3.Name = "textBox3";
+            this.textBox3.Size = new System.Drawing.Size(189, 21);
+            this.textBox3.TabIndex = 10;
+            // 
+            // textBox4
+            // 
+            this.textBox4.Location = new System.Drawing.Point(303, 17);
+            this.textBox4.Name = "textBox4";
+            this.textBox4.Size = new System.Drawing.Size(62, 21);
+            this.textBox4.TabIndex = 11;
+            // 
+            // textBox5
+            // 
+            this.textBox5.Location = new System.Drawing.Point(68, 71);
+            this.textBox5.Name = "textBox5";
+            this.textBox5.Size = new System.Drawing.Size(197, 21);
+            this.textBox5.TabIndex = 12;
+            // 
+            // textBox6
+            // 
+            this.textBox6.Location = new System.Drawing.Point(303, 44);
+            this.textBox6.Name = "textBox6";
+            this.textBox6.Size = new System.Drawing.Size(62, 21);
+            this.textBox6.TabIndex = 13;
+            // 
+            // textBox7
+            // 
+            this.textBox7.Location = new System.Drawing.Point(430, 17);
+            this.textBox7.Name = "textBox7";
+            this.textBox7.Size = new System.Drawing.Size(62, 21);
+            this.textBox7.TabIndex = 14;
+            // 
+            // textBox8
+            // 
+            this.textBox8.Location = new System.Drawing.Point(430, 44);
+            this.textBox8.Name = "textBox8";
+            this.textBox8.Size = new System.Drawing.Size(62, 21);
+            this.textBox8.TabIndex = 15;
             // 
             // PaperHandler
             // 
@@ -663,6 +857,9 @@
             this.panel2.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            this.tabPage3.ResumeLayout(false);
+            this.groupBox4.ResumeLayout(false);
+            this.groupBox4.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -722,6 +919,25 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn ANSWER;
         private System.Windows.Forms.DataGridViewTextBoxColumn ANALYSIS;
         private System.Windows.Forms.DataGridViewTextBoxColumn ROWS;
+        private System.Windows.Forms.ToolStripMenuItem 真题ToolStripMenuItem;
+        private System.Windows.Forms.TabPage tabPage3;
+        private System.Windows.Forms.GroupBox groupBox4;
+        private System.Windows.Forms.TextBox textBox8;
+        private System.Windows.Forms.TextBox textBox7;
+        private System.Windows.Forms.TextBox textBox6;
+        private System.Windows.Forms.TextBox textBox5;
+        private System.Windows.Forms.TextBox textBox4;
+        private System.Windows.Forms.TextBox textBox3;
+        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label label5;
     }
 }
 
