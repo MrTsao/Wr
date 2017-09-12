@@ -32,6 +32,9 @@ namespace SySoft
             this.txtFilePath.Text = "请选择导入文件！";
             this.txtYear.Text = DateTime.Now.Year.ToString();
             this.txtBatchNo.Text = DateTime.Now.ToString("yyyyMMddmmss");
+            this.txtnoanswer.BackColor = Color.FromArgb(201, 235, 196);
+            this.txtError.BackColor = Color.FromArgb(240, 224, 224);
+            this.txtNoAnsi.BackColor = Color.FromArgb(238, 232, 170);
             this.格式1ToolStripMenuItem.Image = null;
             this.格式2ToolStripMenuItem.Image = SySoft.Properties.Resources.forwardarr;
         }
@@ -314,6 +317,13 @@ namespace SySoft
                     sr.Dispose();
                 }
                 dtQuestion.AcceptChanges();
+                var qcnt = from p in dtQuestion.AsEnumerable() where string.IsNullOrEmpty(p.Field<System.String>("ANALYSIS")) select new { cnt = 1 };
+                var qcnt1 = from p in dtQuestion.AsEnumerable() where string.IsNullOrEmpty(p.Field<System.String>("ANSWER")) select new { cnt = 1 };
+                var qcnt2 = from p in dtQuestion.AsEnumerable() where !string.Equals(p.Field<System.Int32?>("SEQ_NUM").ToString(), p.Field<System.String>("Q_SEQ_NUM")) select new { cnt = 1 };
+                this.txtNoAnsi.Text = qcnt.Count().ToString();
+                this.txtError.Text = qcnt2.Count().ToString();
+                this.txtnoanswer.Text = qcnt1.Count().ToString();
+                this.txtTTL.Text = dtQuestion.Rows.Count.ToString();
                 //this.dataGridView1.DataSource = dtQuestion;
 
                 this.tpBar.Value = 100;
@@ -326,6 +336,7 @@ namespace SySoft
         /// <param name="strFilePath"></param>
         private void ReadTextC(string strFilePath)
         {
+            preProcess(strFilePath);
             string strFile = strFilePath.ToUpper();
             if (strFile.EndsWith(".TXT"))
             {
@@ -359,19 +370,24 @@ namespace SySoft
                     Regex tirg = new Regex(@"^\d+[\.．]");
                     Regex oprg = new Regex(@"^[A-E]{1}[\.．]{1}");
                     Regex typerg1 = new Regex(@"[、\.]{1}判断");
-                    Regex typerg2 = new Regex(@"[、\.]{1}单项选择");
-                    Regex typerg3 = new Regex(@"[、\.]{1}多项选择");
-                    Regex answerrg = new Regex(@"参考答案");
-                    Regex answernorg = new Regex(@"^\d+.【答案】");
+                    Regex typerg2 = new Regex(@"[、\.]{1}单项选择|[、\.]{1}单选题");
+                    Regex typerg3 = new Regex(@"[、\.]{1}多项选择|[、\.]{1}多选题");
+                    Regex answerrg = new Regex(@"参考答案|参考解析答案|答案及解析");
+                    Regex answernorg = new Regex(@"^\d+\.【答案】");
+                    Regex opother = new Regex(@"^第 \d* 页");
+                    Regex opsl = new Regex(@"^版权所有");
                     DataRow[] drs = null;
                     while ((strLine = sr.ReadLine()) != null)
                     {
                         strLine = strLine.Replace("　", "").Replace("\t", "").ToUpper().Trim();
                         i++;
+                        if (opother.IsMatch(strLine)) { continue; }
+                        if (opsl.IsMatch(strLine)) { continue; }
                         this.listBox1.Items.Add(strLine);
                         if (string.IsNullOrEmpty(strLine))
                             continue;
-                        if (string.IsNullOrEmpty(strTitle)) {
+                        if (string.IsNullOrEmpty(strTitle))
+                        {
                             strTitle = strLine;
                         }
                         if (typerg1.IsMatch(strLine))
@@ -489,6 +505,10 @@ namespace SySoft
                             }
                             else
                             {
+                                if (typerg1.IsMatch(strLine) || typerg2.IsMatch(strLine) || typerg3.IsMatch(strLine))
+                                {
+                                    continue;
+                                }
 
                                 if (drs != null)
                                 {
@@ -510,6 +530,14 @@ namespace SySoft
                 }
                 dtQuestion.AcceptChanges();
 
+
+                var qcnt = from p in dtQuestion.AsEnumerable() where string.IsNullOrEmpty(p.Field<System.String>("ANALYSIS")) select new { cnt = 1 };
+                var qcnt1 = from p in dtQuestion.AsEnumerable() where string.IsNullOrEmpty(p.Field<System.String>("ANSWER")) select new { cnt = 1 };
+                var qcnt2 = from p in dtQuestion.AsEnumerable() where p.Field<System.Int32>("SEQ_NUM").ToString() != p.Field<System.String>("Q_SEQ_NUM") select new { cnt = 1 };
+                this.txtNoAnsi.Text = qcnt.Count().ToString();
+                this.txtError.Text = qcnt2.Count().ToString();
+                this.txtnoanswer.Text = qcnt1.Count().ToString();
+                this.txtTTL.Text = dtQuestion.Rows.Count.ToString();
                 this.txtQUESTIONS_CNT.Text = dtQuestion.Rows.Count.ToString();
                 this.txtREAL_BATCH_NME.Text = strTitle;
                 //this.dataGridView1.DataSource = dtQuestion;
@@ -531,7 +559,7 @@ namespace SySoft
                 FileStream fs = new FileStream(strFilePath, FileMode.Open, FileAccess.Read);
                 StreamReader sr = new StreamReader(fs, Encoding.UTF8);
                 con = sr.ReadToEnd();
-                con = con.Replace("\n\n", "").Replace("A.", "\nA.").Replace("B.", "\nB.").Replace("C.", "\nC.").Replace("D.", "\nD.");
+                con = con.Replace("\n\n", "").Replace("Ａ", "A").Replace("Ｂ", "B").Replace("Ｃ", "C").Replace("Ｄ", "D").Replace("A.", "\nA.").Replace("A．", "\nA.").Replace("B.", "\nB.").Replace("B．", "\nB.").Replace("C.", "\nC.").Replace("C．", "\nC.").Replace("D.", "\nD.").Replace("D．", "\nD.");
                 sr.Close();
                 fs.Close();
                 FileStream fs2 = new FileStream(strFilePath, FileMode.Truncate, FileAccess.Write);
@@ -603,11 +631,10 @@ namespace SySoft
                     {
                         strLine = strLine.Replace("　", "").Replace("\t", "").ToUpper().Trim();
 
+                        i++;
                         if (opother.IsMatch(strLine)) { continue; }
-
                         if (opsl.IsMatch(strLine)) { continue; }
 
-                        i++;
                         this.listBox1.Items.Add(strLine);
                         if (string.IsNullOrEmpty(strLine))
                             continue;
@@ -672,6 +699,14 @@ namespace SySoft
                     dtQuestion.Rows.Add(drNew);
                 }
                 dtQuestion.AcceptChanges();
+
+                var qcnt = from p in dtQuestion.AsEnumerable() where string.IsNullOrEmpty(p.Field<System.String>("ANALYSIS")) select new { cnt = 1 };
+                var qcnt1 = from p in dtQuestion.AsEnumerable() where string.IsNullOrEmpty(p.Field<System.String>("ANSWER")) select new { cnt = 1 };
+                var qcnt2 = from p in dtQuestion.AsEnumerable() where !string.Equals(p.Field<System.Int32?>("SEQ_NUM").ToString(),p.Field<System.String>("Q_SEQ_NUM")) select new { cnt = 1 };
+                this.txtNoAnsi.Text = qcnt.Count().ToString();
+                this.txtError.Text = qcnt2.Count().ToString();
+                this.txtnoanswer.Text = qcnt1.Count().ToString();
+                this.txtTTL.Text = dtQuestion.Rows.Count.ToString();
                 //this.dataGridView1.DataSource = dtQuestion;
 
                 this.tpBar.Value = 100;
@@ -1324,7 +1359,7 @@ namespace SySoft
 	                    ,'cx' as REC_UPDATE_USR
 	                    ,GETDATE() as REC_UPDATE_DT;";
 
-                        strSql += @"INSERT INTO LSS_EXAM_QUESTIONS_KEY SELECT NEWID() AS QUESTIONS_KEY_ID
+                    strSql += @"INSERT INTO LSS_EXAM_QUESTIONS_KEY SELECT NEWID() AS QUESTIONS_KEY_ID
 ,'" + strQId + @"' as QUESTIONS_ID
 ,'真题-" + this.txtPARTY_TYPE.Text + @"'as EXAM_CONTENT
 ,'" + this.txtIN_YEAR.Text + @"' as EXAM_YEAR,'cx' as INITIAL_USR,GETDATE() as INITIAL_DT,'cx' as REC_UPDATE_USR,GETDATE() as REC_UPDATE_DT;";
@@ -1385,5 +1420,20 @@ namespace SySoft
             }
         }
 
+        private void dataGridView1_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        {
+            if (dataGridView1.Rows[e.RowIndex].Cells[0].Value.ToString() != dataGridView1.Rows[e.RowIndex].Cells[11].Value.ToString())
+            {
+                e.CellStyle.BackColor = Color.FromArgb(240, 224, 224);
+            }
+            else if (dataGridView1.Rows[e.RowIndex].Cells[8].Value.ToString() == "")
+            {
+                e.CellStyle.BackColor = Color.FromArgb(201, 235, 196);
+            }
+            else if (dataGridView1.Rows[e.RowIndex].Cells[9].Value.ToString() == "")
+            {
+                e.CellStyle.BackColor = Color.FromArgb(238, 232, 170);
+            }
+        }
     }
 }
