@@ -46,6 +46,10 @@
             this.ROWS = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.txtnoanswer = new System.Windows.Forms.TextBox();
+            this.label15 = new System.Windows.Forms.Label();
+            this.label14 = new System.Windows.Forms.Label();
+            this.txtTTL = new System.Windows.Forms.TextBox();
             this.txtError = new System.Windows.Forms.TextBox();
             this.txtNoAnsi = new System.Windows.Forms.TextBox();
             this.label13 = new System.Windows.Forms.Label();
@@ -79,11 +83,7 @@
             this.btnDelete = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.label4 = new System.Windows.Forms.Label();
-            this.btnUpdate = new System.Windows.Forms.Button();
-            this.txtBatchNo = new System.Windows.Forms.TextBox();
-            this.dplKey = new System.Windows.Forms.ComboBox();
-            this.label3 = new System.Windows.Forms.Label();
-            this.txtYear = new System.Windows.Forms.TextBox();
+            this.btnAddClass = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
@@ -110,10 +110,8 @@
             this.label7 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
-            this.txtTTL = new System.Windows.Forms.TextBox();
-            this.label14 = new System.Windows.Forms.Label();
-            this.label15 = new System.Windows.Forms.Label();
-            this.txtnoanswer = new System.Windows.Forms.TextBox();
+            this.dplCLASS = new System.Windows.Forms.ComboBox();
+            this.dplChapter = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -156,7 +154,7 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.dataGridView1);
-            this.splitContainer1.Size = new System.Drawing.Size(803, 365);
+            this.splitContainer1.Size = new System.Drawing.Size(803, 364);
             this.splitContainer1.SplitterDistance = 197;
             this.splitContainer1.TabIndex = 4;
             // 
@@ -170,7 +168,7 @@
             this.listBox1.Location = new System.Drawing.Point(0, 0);
             this.listBox1.Margin = new System.Windows.Forms.Padding(0);
             this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(197, 365);
+            this.listBox1.Size = new System.Drawing.Size(197, 364);
             this.listBox1.TabIndex = 4;
             // 
             // dataGridView1
@@ -201,7 +199,7 @@
             this.dataGridView1.RowHeadersVisible = false;
             this.dataGridView1.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
             this.dataGridView1.RowTemplate.Height = 23;
-            this.dataGridView1.Size = new System.Drawing.Size(602, 365);
+            this.dataGridView1.Size = new System.Drawing.Size(602, 364);
             this.dataGridView1.TabIndex = 0;
             this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
             this.dataGridView1.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dataGridView1_CellFormatting);
@@ -308,7 +306,7 @@
             // splitContainer2.Panel2
             // 
             this.splitContainer2.Panel2.Controls.Add(this.splitContainer1);
-            this.splitContainer2.Size = new System.Drawing.Size(803, 419);
+            this.splitContainer2.Size = new System.Drawing.Size(803, 418);
             this.splitContainer2.TabIndex = 5;
             // 
             // groupBox2
@@ -329,6 +327,44 @@
             this.groupBox2.TabIndex = 9;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "读取选项";
+            // 
+            // txtnoanswer
+            // 
+            this.txtnoanswer.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtnoanswer.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.txtnoanswer.Location = new System.Drawing.Point(522, 15);
+            this.txtnoanswer.Name = "txtnoanswer";
+            this.txtnoanswer.ReadOnly = true;
+            this.txtnoanswer.Size = new System.Drawing.Size(47, 21);
+            this.txtnoanswer.TabIndex = 14;
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Location = new System.Drawing.Point(475, 20);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(41, 12);
+            this.label15.TabIndex = 13;
+            this.label15.Text = "无答案";
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(175, 20);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(29, 12);
+            this.label14.TabIndex = 12;
+            this.label14.Text = "总计";
+            // 
+            // txtTTL
+            // 
+            this.txtTTL.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtTTL.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.txtTTL.Location = new System.Drawing.Point(210, 15);
+            this.txtTTL.Name = "txtTTL";
+            this.txtTTL.ReadOnly = true;
+            this.txtTTL.Size = new System.Drawing.Size(47, 21);
+            this.txtTTL.TabIndex = 11;
             // 
             // txtError
             // 
@@ -413,7 +449,7 @@
             this.导出ToolStripMenuItem});
             this.MU_READ_FORMAT.Location = new System.Drawing.Point(0, 0);
             this.MU_READ_FORMAT.Name = "MU_READ_FORMAT";
-            this.MU_READ_FORMAT.Size = new System.Drawing.Size(811, 24);
+            this.MU_READ_FORMAT.Size = new System.Drawing.Size(811, 25);
             this.MU_READ_FORMAT.TabIndex = 9;
             this.MU_READ_FORMAT.Text = "读取格式";
             // 
@@ -423,20 +459,20 @@
             this.打开ToolStripMenuItem,
             this.修改ToolStripMenuItem});
             this.文件ToolStripMenuItem.Name = "文件ToolStripMenuItem";
-            this.文件ToolStripMenuItem.Size = new System.Drawing.Size(41, 20);
+            this.文件ToolStripMenuItem.Size = new System.Drawing.Size(44, 21);
             this.文件ToolStripMenuItem.Text = "文件";
             // 
             // 打开ToolStripMenuItem
             // 
             this.打开ToolStripMenuItem.Name = "打开ToolStripMenuItem";
-            this.打开ToolStripMenuItem.Size = new System.Drawing.Size(112, 22);
+            this.打开ToolStripMenuItem.Size = new System.Drawing.Size(109, 22);
             this.打开ToolStripMenuItem.Text = "打开...";
             this.打开ToolStripMenuItem.Click += new System.EventHandler(this.打开ToolStripMenuItem_Click);
             // 
             // 修改ToolStripMenuItem
             // 
             this.修改ToolStripMenuItem.Name = "修改ToolStripMenuItem";
-            this.修改ToolStripMenuItem.Size = new System.Drawing.Size(112, 22);
+            this.修改ToolStripMenuItem.Size = new System.Drawing.Size(109, 22);
             this.修改ToolStripMenuItem.Text = "修改";
             this.修改ToolStripMenuItem.Click += new System.EventHandler(this.修改ToolStripMenuItem_Click);
             // 
@@ -450,13 +486,13 @@
             this.toolStripSeparator1,
             this.导入答案ToolStripMenuItem});
             this.读取ToolStripMenuItem.Name = "读取ToolStripMenuItem";
-            this.读取ToolStripMenuItem.Size = new System.Drawing.Size(41, 20);
+            this.读取ToolStripMenuItem.Size = new System.Drawing.Size(44, 21);
             this.读取ToolStripMenuItem.Text = "读取";
             // 
             // toolStripMenuItem1
             // 
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(118, 22);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(124, 22);
             this.toolStripMenuItem1.Text = "重新读取";
             this.toolStripMenuItem1.Click += new System.EventHandler(this.toolStripMenuItem1_Click);
             // 
@@ -464,33 +500,33 @@
             // 
             this.格式1ToolStripMenuItem.Image = global::SySoft.Properties.Resources.forwardarr;
             this.格式1ToolStripMenuItem.Name = "格式1ToolStripMenuItem";
-            this.格式1ToolStripMenuItem.Size = new System.Drawing.Size(118, 22);
+            this.格式1ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
             this.格式1ToolStripMenuItem.Text = "格式1";
             this.格式1ToolStripMenuItem.Click += new System.EventHandler(this.格式1ToolStripMenuItem_Click);
             // 
             // 格式2ToolStripMenuItem
             // 
             this.格式2ToolStripMenuItem.Name = "格式2ToolStripMenuItem";
-            this.格式2ToolStripMenuItem.Size = new System.Drawing.Size(118, 22);
+            this.格式2ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
             this.格式2ToolStripMenuItem.Text = "格式2";
             this.格式2ToolStripMenuItem.Click += new System.EventHandler(this.格式2ToolStripMenuItem_Click);
             // 
             // 真题ToolStripMenuItem
             // 
             this.真题ToolStripMenuItem.Name = "真题ToolStripMenuItem";
-            this.真题ToolStripMenuItem.Size = new System.Drawing.Size(118, 22);
+            this.真题ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
             this.真题ToolStripMenuItem.Text = "真题";
             this.真题ToolStripMenuItem.Click += new System.EventHandler(this.真题ToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(115, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(121, 6);
             // 
             // 导入答案ToolStripMenuItem
             // 
             this.导入答案ToolStripMenuItem.Name = "导入答案ToolStripMenuItem";
-            this.导入答案ToolStripMenuItem.Size = new System.Drawing.Size(118, 22);
+            this.导入答案ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
             this.导入答案ToolStripMenuItem.Text = "答案...";
             this.导入答案ToolStripMenuItem.Click += new System.EventHandler(this.导入答案ToolStripMenuItem_Click);
             // 
@@ -499,13 +535,13 @@
             this.导出ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.eXCELToolStripMenuItem});
             this.导出ToolStripMenuItem.Name = "导出ToolStripMenuItem";
-            this.导出ToolStripMenuItem.Size = new System.Drawing.Size(41, 20);
+            this.导出ToolStripMenuItem.Size = new System.Drawing.Size(44, 21);
             this.导出ToolStripMenuItem.Text = "导出";
             // 
             // eXCELToolStripMenuItem
             // 
             this.eXCELToolStripMenuItem.Name = "eXCELToolStripMenuItem";
-            this.eXCELToolStripMenuItem.Size = new System.Drawing.Size(100, 22);
+            this.eXCELToolStripMenuItem.Size = new System.Drawing.Size(112, 22);
             this.eXCELToolStripMenuItem.Text = "EXCEL";
             this.eXCELToolStripMenuItem.Click += new System.EventHandler(this.eXCELToolStripMenuItem_Click);
             // 
@@ -515,11 +551,12 @@
             this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Controls.Add(this.tabPage3);
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tabControl1.Location = new System.Drawing.Point(0, 24);
+            this.tabControl1.Location = new System.Drawing.Point(0, 25);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(811, 445);
+            this.tabControl1.Size = new System.Drawing.Size(811, 444);
             this.tabControl1.TabIndex = 10;
+            this.tabControl1.SelectedIndexChanged += new System.EventHandler(this.tabControl1_SelectedIndexChanged);
             // 
             // tabPage1
             // 
@@ -527,7 +564,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Margin = new System.Windows.Forms.Padding(0);
             this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Size = new System.Drawing.Size(803, 419);
+            this.tabPage1.Size = new System.Drawing.Size(803, 418);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "读取";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -539,9 +576,9 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(803, 419);
+            this.tabPage2.Size = new System.Drawing.Size(803, 418);
             this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "批量更新";
+            this.tabPage2.Text = "章节题目添加";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
             // dataGridView2
@@ -555,7 +592,7 @@
             this.dataGridView2.Name = "dataGridView2";
             this.dataGridView2.ReadOnly = true;
             this.dataGridView2.RowTemplate.Height = 23;
-            this.dataGridView2.Size = new System.Drawing.Size(588, 413);
+            this.dataGridView2.Size = new System.Drawing.Size(588, 412);
             this.dataGridView2.TabIndex = 11;
             // 
             // panel1
@@ -565,7 +602,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Left;
             this.panel1.Location = new System.Drawing.Point(3, 3);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(209, 413);
+            this.panel1.Size = new System.Drawing.Size(209, 412);
             this.panel1.TabIndex = 10;
             // 
             // groupBox3
@@ -573,10 +610,10 @@
             this.groupBox3.Controls.Add(this.libBatch);
             this.groupBox3.Controls.Add(this.panel2);
             this.groupBox3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox3.Location = new System.Drawing.Point(0, 142);
+            this.groupBox3.Location = new System.Drawing.Point(0, 125);
             this.groupBox3.Margin = new System.Windows.Forms.Padding(10, 3, 3, 3);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(209, 271);
+            this.groupBox3.Size = new System.Drawing.Size(209, 287);
             this.groupBox3.TabIndex = 9;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "删除数据";
@@ -588,7 +625,7 @@
             this.libBatch.ItemHeight = 12;
             this.libBatch.Location = new System.Drawing.Point(3, 17);
             this.libBatch.Name = "libBatch";
-            this.libBatch.Size = new System.Drawing.Size(203, 215);
+            this.libBatch.Size = new System.Drawing.Size(203, 231);
             this.libBatch.TabIndex = 0;
             this.libBatch.DoubleClick += new System.EventHandler(this.libBatch_DoubleClick);
             // 
@@ -597,7 +634,7 @@
             this.panel2.Controls.Add(this.btnGetBatch);
             this.panel2.Controls.Add(this.btnDelete);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel2.Location = new System.Drawing.Point(3, 232);
+            this.panel2.Location = new System.Drawing.Point(3, 248);
             this.panel2.MaximumSize = new System.Drawing.Size(259, 36);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(203, 36);
@@ -626,18 +663,16 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.dplChapter);
+            this.groupBox1.Controls.Add(this.dplCLASS);
             this.groupBox1.Controls.Add(this.label4);
-            this.groupBox1.Controls.Add(this.btnUpdate);
-            this.groupBox1.Controls.Add(this.txtBatchNo);
-            this.groupBox1.Controls.Add(this.dplKey);
-            this.groupBox1.Controls.Add(this.label3);
-            this.groupBox1.Controls.Add(this.txtYear);
+            this.groupBox1.Controls.Add(this.btnAddClass);
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Dock = System.Windows.Forms.DockStyle.Top;
             this.groupBox1.Location = new System.Drawing.Point(0, 0);
             this.groupBox1.Margin = new System.Windows.Forms.Padding(3, 3, 10, 3);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(209, 142);
+            this.groupBox1.Size = new System.Drawing.Size(209, 125);
             this.groupBox1.TabIndex = 7;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "增加数据";
@@ -647,74 +682,28 @@
             this.label4.AutoSize = true;
             this.label4.Location = new System.Drawing.Point(20, 29);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(41, 12);
+            this.label4.Size = new System.Drawing.Size(29, 12);
             this.label4.TabIndex = 11;
-            this.label4.Text = "批次号";
+            this.label4.Text = "科目";
             // 
-            // btnUpdate
+            // btnAddClass
             // 
-            this.btnUpdate.Location = new System.Drawing.Point(65, 103);
-            this.btnUpdate.Name = "btnUpdate";
-            this.btnUpdate.Size = new System.Drawing.Size(76, 30);
-            this.btnUpdate.TabIndex = 6;
-            this.btnUpdate.Text = "更新";
-            this.btnUpdate.UseVisualStyleBackColor = true;
-            this.btnUpdate.Click += new System.EventHandler(this.btnUpdate_Click);
-            // 
-            // txtBatchNo
-            // 
-            this.txtBatchNo.Location = new System.Drawing.Point(65, 26);
-            this.txtBatchNo.Name = "txtBatchNo";
-            this.txtBatchNo.ReadOnly = true;
-            this.txtBatchNo.Size = new System.Drawing.Size(121, 21);
-            this.txtBatchNo.TabIndex = 10;
-            // 
-            // dplKey
-            // 
-            this.dplKey.FormattingEnabled = true;
-            this.dplKey.Items.AddRange(new object[] {
-            "",
-            "道德",
-            "法理",
-            "公文",
-            "行政法",
-            "经济",
-            "毛概",
-            "民法",
-            "社会主义市场经济",
-            "事业单位知识",
-            "宪法",
-            "刑法",
-            "中特"});
-            this.dplKey.Location = new System.Drawing.Point(65, 52);
-            this.dplKey.Name = "dplKey";
-            this.dplKey.Size = new System.Drawing.Size(121, 20);
-            this.dplKey.TabIndex = 9;
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(20, 79);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(29, 12);
-            this.label3.TabIndex = 8;
-            this.label3.Text = "年份";
-            // 
-            // txtYear
-            // 
-            this.txtYear.Location = new System.Drawing.Point(65, 76);
-            this.txtYear.Name = "txtYear";
-            this.txtYear.Size = new System.Drawing.Size(121, 21);
-            this.txtYear.TabIndex = 7;
+            this.btnAddClass.Location = new System.Drawing.Point(65, 82);
+            this.btnAddClass.Name = "btnAddClass";
+            this.btnAddClass.Size = new System.Drawing.Size(98, 30);
+            this.btnAddClass.TabIndex = 6;
+            this.btnAddClass.Text = "添加章节内容";
+            this.btnAddClass.UseVisualStyleBackColor = true;
+            this.btnAddClass.Click += new System.EventHandler(this.btnAddClass_Click);
             // 
             // label2
             // 
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(20, 55);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(41, 12);
+            this.label2.Size = new System.Drawing.Size(29, 12);
             this.label2.TabIndex = 1;
-            this.label2.Text = "关键字";
+            this.label2.Text = "章节";
             // 
             // tabPage3
             // 
@@ -723,7 +712,7 @@
             this.tabPage3.Controls.Add(this.groupBox4);
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Size = new System.Drawing.Size(803, 419);
+            this.tabPage3.Size = new System.Drawing.Size(803, 418);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "真题添加";
             this.tabPage3.UseVisualStyleBackColor = true;
@@ -734,7 +723,7 @@
             this.groupBox6.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox6.Location = new System.Drawing.Point(0, 267);
             this.groupBox6.Name = "groupBox6";
-            this.groupBox6.Size = new System.Drawing.Size(803, 152);
+            this.groupBox6.Size = new System.Drawing.Size(803, 151);
             this.groupBox6.TabIndex = 2;
             this.groupBox6.TabStop = false;
             this.groupBox6.Text = "真题题目";
@@ -752,7 +741,7 @@
             this.dataGridView4.RowHeadersVisible = false;
             this.dataGridView4.RowTemplate.Height = 23;
             this.dataGridView4.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridView4.Size = new System.Drawing.Size(797, 132);
+            this.dataGridView4.Size = new System.Drawing.Size(797, 131);
             this.dataGridView4.TabIndex = 0;
             // 
             // groupBox5
@@ -975,43 +964,22 @@
             this.label5.TabIndex = 0;
             this.label5.Text = "试题名称";
             // 
-            // txtTTL
+            // dplCLASS
             // 
-            this.txtTTL.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtTTL.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.txtTTL.Location = new System.Drawing.Point(210, 15);
-            this.txtTTL.Name = "txtTTL";
-            this.txtTTL.ReadOnly = true;
-            this.txtTTL.Size = new System.Drawing.Size(47, 21);
-            this.txtTTL.TabIndex = 11;
+            this.dplCLASS.FormattingEnabled = true;
+            this.dplCLASS.Location = new System.Drawing.Point(55, 26);
+            this.dplCLASS.Name = "dplCLASS";
+            this.dplCLASS.Size = new System.Drawing.Size(131, 20);
+            this.dplCLASS.TabIndex = 12;
+            this.dplCLASS.SelectedIndexChanged += new System.EventHandler(this.dplCLASS_SelectedIndexChanged);
             // 
-            // label14
+            // dplChapter
             // 
-            this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(175, 20);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(29, 12);
-            this.label14.TabIndex = 12;
-            this.label14.Text = "总计";
-            // 
-            // label15
-            // 
-            this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(475, 20);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(41, 12);
-            this.label15.TabIndex = 13;
-            this.label15.Text = "无答案";
-            // 
-            // txtnoanswer
-            // 
-            this.txtnoanswer.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtnoanswer.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.txtnoanswer.Location = new System.Drawing.Point(522, 15);
-            this.txtnoanswer.Name = "txtnoanswer";
-            this.txtnoanswer.ReadOnly = true;
-            this.txtnoanswer.Size = new System.Drawing.Size(47, 21);
-            this.txtnoanswer.TabIndex = 14;
+            this.dplChapter.FormattingEnabled = true;
+            this.dplChapter.Location = new System.Drawing.Point(55, 52);
+            this.dplChapter.Name = "dplChapter";
+            this.dplChapter.Size = new System.Drawing.Size(131, 20);
+            this.dplChapter.TabIndex = 13;
             // 
             // PaperHandler
             // 
@@ -1090,17 +1058,13 @@
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.TabPage tabPage2;
-        private System.Windows.Forms.Button btnUpdate;
+        private System.Windows.Forms.Button btnAddClass;
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.ComboBox dplKey;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.TextBox txtYear;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.ListBox libBatch;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.TextBox txtBatchNo;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Button btnDelete;
         private System.Windows.Forms.DataGridView dataGridView2;
@@ -1151,6 +1115,8 @@
         private System.Windows.Forms.TextBox txtTTL;
         private System.Windows.Forms.TextBox txtnoanswer;
         private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.ComboBox dplChapter;
+        private System.Windows.Forms.ComboBox dplCLASS;
     }
 }
 
