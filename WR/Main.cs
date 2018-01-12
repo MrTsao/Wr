@@ -1463,12 +1463,16 @@ namespace SySoft
                 double dCrease = this.dataGridView1.Rows.Count / 100.00, dAcount = 0.0;
                 CMemIdGenerator cm = new CMemIdGenerator();
                 cm.IDPrefix = "RID";
+
+                string strREF_CLASS_ID = this.dplCLASS.SelectedValue.ToString();
+
                 for (int i = 0; i < this.dataGridView1.Rows.Count; i++)
                 {
                     string strId = cm.NewID();
                     strSql = @"insert into LSS_EXAM_QUESTIONS SELECT 
         	                    '" + strId + @"' AS QUESTIONS_ID,null as REAL_BATCH_ID
         	                    ,'" + this.dplChapter.SelectedValue + @"' AS RELATION_ID
+        	                    ,'" + strREF_CLASS_ID + @"' AS REF_CLASS_ID
         	                    ,NULL AS QUESTIONS_NO
         	                    ,'" + this.dataGridView1.Rows[i].Cells[0].Value.ToString().Replace("'", "''") + @"' as SEQ_NUM
         	                    ,'0' as QUESTIONS_PROPERTY_CID
